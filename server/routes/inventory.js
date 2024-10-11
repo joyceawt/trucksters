@@ -1,0 +1,79 @@
+const express = require('express')
+const router = express.Router()
+const Inventory = require('../models/Inventory')
+
+router.get('/', async (req, res) => {
+  try {
+    const inventory = await Inventory.find()
+    res.json(inventory)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+router.get('/:id', async (req, res) => {
+  try {
+    const item = await Inventory.findById(req.params.id)
+    if (!item) return res.status(404).json({ message: 'Item not found' })
+    res.json(item)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+router.post('/', async (req, res) => {
+  const { item_name, quantity, unit_cost, reorder_point, type, vendor_id } =
+    req.body
+
+  const item = new Inventory({
+    item_name: item_name,
+    quantity: quantity,
+    unit_cost: unit_cost,
+    reorder_point: reorder_point,
+    type: type,
+    vendor_id: vendor_id,
+  })
+
+  try {
+    const newItem = await item.save()
+    res.status(201).json(newItem)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+})
+
+router.put('/:id', async (req, res) => {
+  try {
+    const item = await Inventory.findById(req.params.id)
+    if (!item) return res.status(404).json({ message: 'Item not found' })
+
+    const { item_name, quantity, unit_cost, reorder_point, type, vendor_id } =
+      req.body
+
+    item.item_name = item_name
+    item.quantity = quantity
+    item.unit_cost = unit_cost
+    item.reorder_point = reorder_point
+    item.type = type
+    item.vendor_id = vendor_id
+
+    const updatedItem = await item.save()
+    res.json(updatedItem)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+})
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const item = await Inventory.findById(req.params.id)
+    if (!item) return res.status(404).json({ message: 'Item not found' })
+
+    await item.remove()
+    res.json({ message: 'Item deleted' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+module.exports = router
