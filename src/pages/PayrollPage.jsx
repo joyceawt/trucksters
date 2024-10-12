@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react'
 import { PayrollList, UtilityBar, SelectDropdown } from '../components'
 import { allEmployees } from './EmployeesPage'
 import { Form, Button } from 'react-bootstrap'
+import axios from 'axios'
 
-export const PayrollPage = ({ payEmployee }) => {
+export const PayrollPage = () => {
   const [employees, setEmployees] = useState([])
   const [selectedEmployee, setSelectedEmployee] = useState(null)
   const [payrollHistory, setPayrollHistory] = useState([])
+
+  const PAYROLL_PROCESS_URL = 'http://localhost:4000/api/payroll'
 
   const fetchEmployees = async () => {
     try {
@@ -31,7 +34,28 @@ export const PayrollPage = ({ payEmployee }) => {
     setPayrollHistory(selectedEmp.payroll || [])
   }
 
-  const onPayEmployee = async () => {}
+  const onPayEmployee = async () => {
+    if (!selectedEmployee) {
+      alert('Please select an employee to pay.')
+      return
+    }
+
+    try {
+      const { data } = await axios.post(
+        `${PAYROLL_PROCESS_URL}/${selectedEmployee._id}`
+      )
+
+      setPayrollHistory([...payrollHistory, data.payrollEvent])
+    } catch (err) {
+      if (err && err.response && err.response.data) {
+        alert(`Error processing payroll: ${err.response.data.message}`)
+      } else {
+        alert(
+          'Something went wrong trying to process the payroll. Please try again.'
+        )
+      }
+    }
+  }
 
   const selectEmployee = () => {
     return (

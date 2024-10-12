@@ -9,7 +9,7 @@ const PayrollList = ({ selectedEmployee, payrollHistory }) => {
   }
 
   const totalDisbursement = payrollHistory
-    .reduce((acc, payroll) => acc + (selectedEmployee?.salary || 0), 0)
+    .reduce((acc, payroll) => acc + (payroll.amount_paid || 0), 0)
     .toFixed(2)
 
   const totalWithholdings = payrollHistory
@@ -65,7 +65,7 @@ const PayrollList = ({ selectedEmployee, payrollHistory }) => {
             {payrollHistory.map((payroll, i) => (
               <tr key={i} payroll>
                 <td>{new Date(payroll.date_paid).toLocaleDateString()}</td>
-                <td>{selectedEmployee.salary.toFixed(2)}</td>
+                <td>{payroll.amount_paid.toFixed(2)}</td>
                 <td>{payrollWithholding(payroll)}</td>
               </tr>
             ))}

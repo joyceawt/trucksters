@@ -16,6 +16,7 @@ const purchaseOrderRoutes = require('./routes/purchaseOrder')
 const invoiceRoutes = require('./routes/invoice')
 const balanceSheet = require('./routes/balanceSheet')
 const incomeStatement = require('./routes/incomeStatement')
+const payrollRoutes = require('./routes/payroll')
 
 mongoose
   .connect(dbUrl, {
@@ -38,6 +39,7 @@ app.use('/api/purchase-orders', purchaseOrderRoutes)
 app.use('/api/invoices', invoiceRoutes)
 app.use('/api/balance-sheet', balanceSheet)
 app.use('/api/income-statement', incomeStatement)
+app.use('/api/payroll', payrollRoutes)
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
