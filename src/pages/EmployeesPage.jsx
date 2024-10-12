@@ -4,7 +4,7 @@ import { EmployeesList, UtilityBar, AddEmployee } from '../components'
 
 const EMPLOYEES_PATH = 'http://localhost:4000/api/employees'
 
-const allEmployees = async () => {
+export const allEmployees = async () => {
   return await axios.get(EMPLOYEES_PATH)
 }
 

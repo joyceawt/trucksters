@@ -11,6 +11,8 @@ import Customer from './Customer'
 import Vendor from './Vendor'
 import VendorsList from './VendorsList'
 import AddVendor from './AddVendor'
+import PayrollList from './PayrollList'
+import SelectDropdown from './SelectDropdown'
 
 export {
   Nav,
@@ -26,4 +28,6 @@ export {
   Vendor,
   VendorsList,
   AddVendor,
+  PayrollList,
+  SelectDropdown,
 }

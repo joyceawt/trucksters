@@ -4,10 +4,10 @@ const PayrollSchema = new mongoose.Schema({
   date_paid: { type: Date },
   federal_tax_withheld: { type: Number, required: true },
   state_tax_withheld: { type: Number, required: true },
-  net_salary: { type: Number },
   social_security_tax: { type: Number, required: true },
   medicare_tax: { type: Number, required: true },
   amount_paid: { type: Number },
+  bounce: { type: Number, default: 0 },
 })
 
 const EmployeeSchema = new mongoose.Schema({
