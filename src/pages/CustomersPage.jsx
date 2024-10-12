@@ -26,6 +26,7 @@ export const CustomersPage = ({ addCustomer }) => {
       const { data } = await axios.post(CUSTOMERS_PATH, customer)
 
       setCustomers([...customers, data])
+      return true
     } catch (err) {
       if (err && err.response && err.response.data) {
         alert(`Error: ${err.response.data.message}`)
@@ -33,6 +34,7 @@ export const CustomersPage = ({ addCustomer }) => {
         alert('Error: Something went wrong. Please try again.')
       }
     }
+    return false
   }
 
   useEffect(() => {

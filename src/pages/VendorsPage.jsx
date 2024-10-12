@@ -26,6 +26,7 @@ export const VendorsPage = ({ addVendor }) => {
       const { data } = await axios.post(VENDORS_PATH, vendor)
 
       setVendors([...vendors, data])
+      return true
     } catch (err) {
       if (err && err.response && err.response.data) {
         alert(`Error: ${err.response.data.message}`)
@@ -33,6 +34,7 @@ export const VendorsPage = ({ addVendor }) => {
         alert('Error: Something went wrong. Please try again.')
       }
     }
+    return false
   }
 
   useEffect(() => {

@@ -26,6 +26,7 @@ export const EmployeesPage = ({ addEmployee }) => {
       const { data } = await axios.post(EMPLOYEES_PATH, employee)
 
       setEmployees([...employees, data])
+      return true
     } catch (err) {
       if (err && err.response && err.response.data) {
         alert(`Error: ${err.response.data.message}`)
@@ -33,6 +34,7 @@ export const EmployeesPage = ({ addEmployee }) => {
         alert('Error: Something went wrong. Please try again.')
       }
     }
+    return false
   }
 
   useEffect(() => {
