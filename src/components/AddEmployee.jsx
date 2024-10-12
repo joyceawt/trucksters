@@ -54,7 +54,7 @@ const AddEmployee = ({ onAddEmployee }) => {
         onSubmit={handleSubmit}
       >
         <Row className='mb-3'>
-          <Form.Group as={Col} md='6' controlId='add-first-name'>
+          <Form.Group as={Col} md='6' controlId='add-employee-first-name'>
             <Form.Label className='col-form-label'>First Name:</Form.Label>
             <Form.Control
               type='text'
@@ -69,7 +69,7 @@ const AddEmployee = ({ onAddEmployee }) => {
               Please provide a valid first name.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group as={Col} md='6' controlId='add-last-name'>
+          <Form.Group as={Col} md='6' controlId='add-employee-last-name'>
             <Form.Label className='col-form-label'>Last Name:</Form.Label>
             <Form.Control
               type='text'
@@ -85,7 +85,7 @@ const AddEmployee = ({ onAddEmployee }) => {
           </Form.Group>
         </Row>
         <Row className='mb-3'>
-          <Form.Group controlId='add-address-1'>
+          <Form.Group controlId='add-employee-address-1'>
             <Form.Label className='col-form-label'>Address 1:</Form.Label>
             <Form.Control
               type='text'
@@ -101,7 +101,7 @@ const AddEmployee = ({ onAddEmployee }) => {
           </Form.Group>
         </Row>
         <Row className='mb-3'>
-          <Form.Group controlId='add-address-1'>
+          <Form.Group controlId='add-employee-address-2'>
             <Form.Label className='col-form-label'>Address 2:</Form.Label>
             <Form.Control
               type='text'
@@ -113,7 +113,7 @@ const AddEmployee = ({ onAddEmployee }) => {
           </Form.Group>
         </Row>
         <Row className='mb-3'>
-          <Form.Group as={Col} md='4' controlId='add-city'>
+          <Form.Group as={Col} md='4' controlId='add-employee-city'>
             <Form.Label className='col-form-label'>City:</Form.Label>
             <Form.Control
               type='text'
@@ -127,7 +127,7 @@ const AddEmployee = ({ onAddEmployee }) => {
               Please provide a valid city.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group as={Col} md='4' controlId='add-state'>
+          <Form.Group as={Col} md='4' controlId='add-employee-state'>
             <Form.Label className='col-form-label'>State:</Form.Label>
             <Form.Control
               type='text'
@@ -141,7 +141,7 @@ const AddEmployee = ({ onAddEmployee }) => {
               Please provide a valid state.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group as={Col} md='4' controlId='add-zip'>
+          <Form.Group as={Col} md='4' controlId='add-employee-zip'>
             <Form.Label className='col-form-label'>Zip Code:</Form.Label>
             <Form.Control
               type='number'
@@ -157,7 +157,7 @@ const AddEmployee = ({ onAddEmployee }) => {
           </Form.Group>
         </Row>
         <Row className='mb-3'>
-          <Form.Group controlId='add-ssn'>
+          <Form.Group controlId='add-employee-ssn'>
             <Form.Label className='col-form-label'>
               Social Security Number:
             </Form.Label>
@@ -175,7 +175,7 @@ const AddEmployee = ({ onAddEmployee }) => {
           </Form.Group>
         </Row>
         <Row className='mb-3'>
-          <Form.Group controlId='add-withholdings'>
+          <Form.Group controlId='add-employee-withholdings'>
             <Form.Label className='col-form-label'>
               Number of Withholdings
             </Form.Label>
@@ -193,7 +193,7 @@ const AddEmployee = ({ onAddEmployee }) => {
           </Form.Group>
         </Row>
         <Row className='mb-3'>
-          <Form.Group controlId='add-withholdings'>
+          <Form.Group controlId='add-employee-salary'>
             <Form.Label className='col-form-label'>Salary</Form.Label>
             <InputGroup hasValidation>
               <InputGroup.Text id='inputGroupPrepend'>$</InputGroup.Text>
