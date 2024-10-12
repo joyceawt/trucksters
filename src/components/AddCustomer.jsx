@@ -63,7 +63,7 @@ const AddCustomer = ({ onAddCustomer }) => {
               required
             />
             <Form.Control.Feedback type='invalid'>
-              Please provide a valid first name.
+              Please provide a valid company name.
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group as={Col} md='4' controlId='add-cust-first-name'>
