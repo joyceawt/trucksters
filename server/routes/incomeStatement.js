@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Invoice = require('../models/Invoice')
 const PurchaseOrder = require('../models/PurchaseOrder')
-const Payroll = require('../models/Payroll')
+const Employee = require('../models/Employee') // Import Employee instead of Payroll
 
 const calculateIncomeStatement = async () => {
   let revenue = 0
@@ -14,15 +14,18 @@ const calculateIncomeStatement = async () => {
     revenue += invoice.total_amount
   })
 
-  // Calculate expenses from purchase orders and payroll
+  // Calculate expenses from purchase orders
   const purchaseOrders = await PurchaseOrder.find()
   purchaseOrders.forEach((po) => {
     expenses += po.total_cost
   })
 
-  const payrolls = await Payroll.find()
-  payrolls.forEach((payroll) => {
-    expenses += payroll.gross_salary
+  // Calculate payroll expenses from employee records
+  const employees = await Employee.find()
+  employees.forEach((employee) => {
+    employee.payroll.forEach((payroll) => {
+      expenses += payroll.amount_paid // You might use gross_salary if you prefer
+    })
   })
 
   const netIncome = revenue - expenses

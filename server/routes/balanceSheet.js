@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Invoice = require('../models/Invoice')
 const PurchaseOrder = require('../models/PurchaseOrder')
-const Payroll = require('../models/Payroll')
+const Employee = require('../models/Employee') // Import Employee instead of Payroll
 
 const calculateBalanceSheet = async () => {
   let assets = 0
@@ -20,10 +20,12 @@ const calculateBalanceSheet = async () => {
     liabilities += po.total_cost
   })
 
-  // Add payroll liabilities if any exist
-  const payrolls = await Payroll.find()
-  payrolls.forEach((payroll) => {
-    liabilities += payroll.gross_salary
+  // Calculate payroll liabilities from employee records
+  const employees = await Employee.find()
+  employees.forEach((employee) => {
+    employee.payroll.forEach((payroll) => {
+      liabilities += payroll.net_salary // Assuming liabilities are based on net salary, you can adjust this
+    })
   })
 
   const equity = assets - liabilities

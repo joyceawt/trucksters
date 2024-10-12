@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const Employee = require('../models/Employee')
+const EmployeeModel = require('../models/Employee')
 
 router.get('/', async (req, res) => {
   try {
-    const employees = await Employee.find()
+    const employees = await EmployeeModel.find()
     res.json(employees)
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const employee = await Employee.findById(req.params.id)
+    const employee = await EmployeeModel.findById(req.params.id)
     if (!employee)
       return res.status(404).json({ message: 'Employee not found' })
     res.json(employee)
@@ -23,10 +23,28 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const { name, position, salary } = req.body
-  const employee = new Employee({
-    name: name,
-    position: position,
+  const {
+    firstName,
+    lastName,
+    address1,
+    address2,
+    city,
+    salary,
+    state,
+    ssn,
+    noWithholdings,
+    zip,
+  } = req.body
+  const employee = new EmployeeModel({
+    first_name: firstName,
+    last_name: lastName,
+    address_1: address1,
+    address_2: address2,
+    city: city,
+    state: state,
+    zip: zip,
+    ssn: ssn,
+    withholdings: noWithholdings,
     salary: salary,
   })
 
@@ -40,7 +58,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const employee = await Employee.findById(req.params.id)
+    const employee = await EmployeeModel.findById(req.params.id)
     if (!employee)
       return res.status(404).json({ message: 'Employee not found' })
 
@@ -59,7 +77,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const employee = await Employee.findById(req.params.id)
+    const employee = await EmployeeModel.findById(req.params.id)
     if (!employee)
       return res.status(404).json({ message: 'Employee not found' })
 

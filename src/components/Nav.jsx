@@ -53,7 +53,7 @@ function Nav() {
               aria-current='page'
               to='/payroll'
             >
-              <i class='bi bi-wallet-fill'></i>
+              <i className='bi bi-wallet-fill'></i>
             </NavLink>
           </OverlayTrigger>
         </li>

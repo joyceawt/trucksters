@@ -7,6 +7,7 @@ import Footer from './components/Footer'
 
 // Pages
 import HomePage from './pages/HomePage'
+import EmployeesPage from './pages/EmployeesPage'
 
 function App() {
   const title = 'Trucksters'
@@ -17,12 +18,20 @@ function App() {
         <div className='d-flex min-vh-100'>
           <BrowserRouter>
             <Nav />
-            <div className='p2 flex-grow-1 ps-5 flex-column align-items-center justify-content-center'>
+            <div className='p2 flex-grow-1 p-5 flex-column align-items-center justify-content-center'>
               <Header title={title} />
 
               <main className='custom-size'>
                 <Routes>
                   <Route path='/' element={<HomePage />} />
+                  <Route
+                    path='/employees'
+                    element={<EmployeesPage addEmployee={false} />}
+                  />
+                  <Route
+                    path='/employees/add'
+                    element={<EmployeesPage addEmployee={true} />}
+                  />
                 </Routes>
                 <Footer />
               </main>
