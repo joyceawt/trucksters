@@ -36,8 +36,10 @@ const AddCustomer = ({ onAddCustomer }) => {
     if (form.checkValidity() === false) {
       e.stopPropagation()
     } else {
-      await onAddCustomer(newCustomer)
-      navigate('/customers')
+      const success = await onAddCustomer(newCustomer)
+      if (success) {
+        navigate('/customers')
+      }
     }
   }
 

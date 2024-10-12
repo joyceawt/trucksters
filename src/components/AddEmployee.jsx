@@ -39,8 +39,10 @@ const AddEmployee = ({ onAddEmployee }) => {
     if (form.checkValidity() === false) {
       e.stopPropagation()
     } else {
-      await onAddEmployee(newEmployee)
-      navigate('/employees')
+      const success = await onAddEmployee(newEmployee)
+      if (success) {
+        navigate('/employees')
+      }
     }
   }
 
