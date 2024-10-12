@@ -27,7 +27,11 @@ export const CustomersPage = ({ addCustomer }) => {
 
       setCustomers([...customers, data])
     } catch (err) {
-      console.error(err)
+      if (err && err.response && err.response.data) {
+        alert(`Error: ${err.response.data.message}`)
+      } else {
+        alert('Error: Something went wrong. Please try again.')
+      }
     }
   }
 
