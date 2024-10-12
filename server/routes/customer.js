@@ -23,10 +23,25 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const { name, contact_info } = req.body
+  const {
+    companyName,
+    lastName,
+    firstName,
+    address1,
+    address2,
+    city,
+    state,
+    zip,
+  } = req.body
   const customer = new Customer({
-    name: name,
-    contact_info: contact_info,
+    company_name: companyName,
+    last_name: lastName,
+    first_name: firstName,
+    address_1: address1,
+    address_2: address2,
+    city: city,
+    state: state,
+    zip: zip,
   })
 
   try {

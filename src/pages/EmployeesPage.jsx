@@ -16,7 +16,6 @@ export const EmployeesPage = ({ addEmployee }) => {
       const { data } = await allEmployees()
 
       setEmployees(data)
-      console.log(data)
     } catch (err) {
       console.error(err)
     }

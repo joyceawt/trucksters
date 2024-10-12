@@ -1,13 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // components
-import Nav from './components/Nav'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import { Nav, Header, Footer } from './components'
 
 // Pages
-import HomePage from './pages/HomePage'
-import EmployeesPage from './pages/EmployeesPage'
+import { HomePage, EmployeesPage, CustomersPage } from './pages'
 
 function App() {
   const title = 'Trucksters'
@@ -31,6 +28,14 @@ function App() {
                   <Route
                     path='/employees/add'
                     element={<EmployeesPage addEmployee={true} />}
+                  />
+                  <Route
+                    path='/customers'
+                    element={<CustomersPage addCustomer={false} />}
+                  />
+                  <Route
+                    path='/customers/add'
+                    element={<CustomersPage addCustomer={true} />}
                   />
                 </Routes>
                 <Footer />
