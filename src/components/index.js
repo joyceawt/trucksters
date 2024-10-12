@@ -8,6 +8,9 @@ import AddEmployee from './AddEmployee'
 import AddCustomer from './AddCustomer'
 import CustomersList from './CustomersList'
 import Customer from './Customer'
+import Vendor from './Vendor'
+import VendorsList from './VendorsList'
+import AddVendor from './AddVendor'
 
 export {
   Nav,
@@ -20,4 +23,7 @@ export {
   AddCustomer,
   CustomersList,
   Customer,
+  Vendor,
+  VendorsList,
+  AddVendor,
 }

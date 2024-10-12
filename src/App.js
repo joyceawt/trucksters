@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Nav, Header, Footer } from './components'
 
 // Pages
-import { HomePage, EmployeesPage, CustomersPage } from './pages'
+import { HomePage, EmployeesPage, CustomersPage, VendorsPage } from './pages'
 
 function App() {
   const title = 'Trucksters'
@@ -36,6 +36,14 @@ function App() {
                   <Route
                     path='/customers/add'
                     element={<CustomersPage addCustomer={true} />}
+                  />
+                  <Route
+                    path='/vendors'
+                    element={<VendorsPage addVendor={false} />}
+                  />
+                  <Route
+                    path='/vendors/add'
+                    element={<VendorsPage addVendor={true} />}
                   />
                 </Routes>
                 <Footer />
