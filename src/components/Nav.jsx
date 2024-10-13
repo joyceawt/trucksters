@@ -162,7 +162,9 @@ function Nav() {
               aria-current='page'
               to='/income-statement'
             >
-              <BiMoneyWithdraw className='bi' />
+              {({ isActive }) => (
+                <BiMoneyWithdraw className={'bi' + fill(isActive)} />
+              )}
             </NavLink>
           </OverlayTrigger>
         </li>
