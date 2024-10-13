@@ -10,15 +10,12 @@ const allInvoices = async () => {
 
 export const InvoicesPage = ({ createInvoice }) => {
   const [invoices, setInvoices] = useState([])
-  const [completeUnitsInStock, setCompleteUnitsInStock] = useState(0)
 
   const fetchInvoices = async () => {
     try {
       const { data } = await allInvoices()
-      const { invoices, complete_units_in_stock } = data
 
-      setInvoices(invoices)
-      setCompleteUnitsInStock(complete_units_in_stock)
+      setInvoices(data)
     } catch (err) {
       console.error(err)
     }
@@ -45,10 +42,7 @@ export const InvoicesPage = ({ createInvoice }) => {
   }, [])
 
   const displayComponent = createInvoice ? (
-    <CreateInvoice
-      onCreateInvoice={onCreateInvoice}
-      completeUnitsInStock={completeUnitsInStock}
-    />
+    <CreateInvoice onCreateInvoice={onCreateInvoice} />
   ) : (
     <InvoicesList invoices={invoices} />
   )

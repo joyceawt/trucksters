@@ -5,7 +5,8 @@ import { InventoryList, UtilityBar } from '../components'
 const INVENTORY_PATH = 'http://localhost:4000/api/inventory'
 
 export const allInventory = async () => {
-  return await axios.get(INVENTORY_PATH)
+  const { data } = await axios.get(INVENTORY_PATH)
+  return data
 }
 
 export const InventoryPage = () => {
@@ -14,8 +15,7 @@ export const InventoryPage = () => {
 
   const fetchInventory = async () => {
     try {
-      const { data } = await allInventory()
-      const { inventory, complete_toys_in_stock } = data
+      const { inventory, complete_toys_in_stock } = await allInventory()
 
       setInventoryItems(inventory)
       setCompleteToysInStock(complete_toys_in_stock)

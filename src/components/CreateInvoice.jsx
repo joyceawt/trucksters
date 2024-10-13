@@ -3,13 +3,25 @@ import { Form, Button, Row } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { SelectDropdown } from '.'
 import { allCustomers } from '../pages/CustomersPage'
+import { allInventory } from '../pages/InventoryPage'
 
 const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
   const [customers, setCustomers] = useState([])
   const [customerId, setCustomerId] = useState('')
   const [quantity, setQuantity] = useState('')
+  const [completeToysInStock, setCompleteToysInStock] = useState('')
 
   const [validated, setValidated] = useState(false)
+
+  const fetchCompleteToysInStock = async () => {
+    try {
+      const { complete_toys_in_stock } = await allInventory()
+
+      setCompleteToysInStock(complete_toys_in_stock)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   const fetchCustomers = async () => {
     try {
@@ -61,6 +73,7 @@ const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
 
   useEffect(() => {
     fetchCustomers()
+    fetchCompleteToysInStock()
   }, [])
 
   return (
@@ -107,7 +120,7 @@ const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
           </Form.Group>
         </Row>
         <Row className='mb-3'>
-          <p>Number of Units in Stock: {completeUnitsInStock}</p>
+          <p>Number of Units in Stock: {completeToysInStock}</p>
         </Row>
         <Button as={Link} variant='secondary' to='/invoices'>
           Cancel
