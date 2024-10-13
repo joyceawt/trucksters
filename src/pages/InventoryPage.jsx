@@ -31,7 +31,7 @@ export const InventoryPage = () => {
   return (
     <>
       <section>
-        <UtilityBar contentTitle='Inventory' />
+        <UtilityBar contentTitle='Inventory' showButton={false} />
       </section>
 
       <InventoryList

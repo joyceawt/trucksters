@@ -3,6 +3,7 @@ const router = express.Router()
 const Invoice = require('../models/Invoice')
 const Customer = require('../models/Customer')
 const Product = require('../models/Product')
+const Inventory = require('../models/Inventory')
 
 router.get('/', async (req, res) => {
   try {
@@ -13,6 +14,34 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+
+const buildToysFromParts = async (remainingToysNeeded) => {
+  const inventoryItems = await Inventory.find()
+
+  if (!inventoryItems || inventoryItems.length === 0) {
+    return false
+  }
+
+  const buildCapacity = inventoryItems.map((item) => {
+    return Math.floor(item.quantity / item.units_per_toy)
+  })
+
+  const minToys = Math.min(...buildCapacity)
+  const maxToysBuildable = minToys > 0 ? minToys : 0
+
+  if (maxToysBuildable < remainingToysNeeded) {
+    return false
+  }
+
+  inventoryItems.forEach((item) => {
+    const partsNeeded = remainingToysNeeded * item.units_per_toy
+    item.quantity -= partsNeeded
+  })
+
+  await Promise.all(inventoryItems.map((item) => item.save()))
+
+  return true
+}
 
 router.post('/', async (req, res) => {
   const { customerId, quantity } = req.body
@@ -26,9 +55,17 @@ router.post('/', async (req, res) => {
     const product = await Product.findOne()
 
     if (product.quantity < quantity) {
-      return res.status(400).json({
-        message: 'Not enough toys in stock',
-      })
+      const remainingToysNeeded = quantity - product.quantity
+
+      const canBuildToys = await buildToysFromParts(remainingToysNeeded)
+
+      if (!canBuildToys) {
+        return res.status(400).json({
+          message: 'Not enough toys in stock',
+        })
+      }
+
+      product.quantity += remainingToysNeeded
     }
 
     product.quantity -= quantity

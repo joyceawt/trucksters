@@ -1,4 +1,18 @@
-const InventoryList = ({ inventoryItems, completeToysInStock }) => {
+export const buildCapacity = (inventoryItems) => {
+  if (!inventoryItems || inventoryItems.length === 0) {
+    return 0
+  }
+
+  const toysPerPart = inventoryItems.map((item) => {
+    return Math.floor(item.quantity / item.units_per_toy)
+  })
+
+  const minToys = Math.min(...toysPerPart)
+
+  return minToys > 0 ? minToys : 0
+}
+
+export const InventoryList = ({ inventoryItems, completeToysInStock }) => {
   const inventoryItemValue = (inventoryItem) => {
     return inventoryItem.price_per_unit * inventoryItem.quantity
   }
@@ -19,20 +33,8 @@ const InventoryList = ({ inventoryItems, completeToysInStock }) => {
       .reduce((a, b) => a + b, 0)
   }
 
-  const buildCapacity = () => {
-    if (inventoryItems.length === 0) {
-      return 0
-    }
-
-    const toysPerPart = inventoryItems.map((item) => {
-      return Math.floor(item.quantity / item.units_per_toy)
-    })
-
-    return Math.min(...toysPerPart)
-  }
-
   const totalValue = () => {
-    return buildCapacity() * cogPerUnit() || 0
+    return buildCapacity(inventoryItems) * cogPerUnit() || 0
   }
 
   return (
@@ -75,7 +77,7 @@ const InventoryList = ({ inventoryItems, completeToysInStock }) => {
             <tr>
               <td>{inventoryTotal().toFixed(2)}</td>
               <td>${cogPerUnit().toFixed(2)}</td>
-              <td>{buildCapacity()}</td>
+              <td>{buildCapacity(inventoryItems)}</td>
             </tr>
           </tbody>
         </table>

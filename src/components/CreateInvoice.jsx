@@ -4,20 +4,23 @@ import { Link, useNavigate } from 'react-router-dom'
 import { SelectDropdown } from '.'
 import { allCustomers } from '../pages/CustomersPage'
 import { allInventory } from '../pages/InventoryPage'
+import { buildCapacity } from '../components/InventoryList'
 
 const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
   const [customers, setCustomers] = useState([])
   const [customerId, setCustomerId] = useState('')
   const [quantity, setQuantity] = useState('')
   const [completeToysInStock, setCompleteToysInStock] = useState('')
+  const [inventoryItems, setInventoryItems] = useState([])
 
   const [validated, setValidated] = useState(false)
 
-  const fetchCompleteToysInStock = async () => {
+  const fetchInventory = async () => {
     try {
-      const { complete_toys_in_stock } = await allInventory()
+      const { inventoryItems, complete_toys_in_stock } = await allInventory()
 
       setCompleteToysInStock(complete_toys_in_stock)
+      setInventoryItems(inventoryItems)
     } catch (err) {
       console.error(err)
     }
@@ -56,8 +59,10 @@ const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
       return
     }
 
-    if (quantity > completeUnitsInStock) {
-      alert('Quantity exceeds available units in stock.')
+    if (quantity > completeUnitsInStock + getBuildCapacity()) {
+      alert(
+        'Quantity exceeds available units in stock and number of units that can be built. Please enter a valid quantity.'
+      )
       return
     }
 
@@ -71,9 +76,16 @@ const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
     }
   }
 
+  const getBuildCapacity = () => {
+    if (!inventoryItems) {
+      return 0
+    }
+    return buildCapacity(inventoryItems)
+  }
+
   useEffect(() => {
     fetchCustomers()
-    fetchCompleteToysInStock()
+    fetchInventory()
   }, [])
 
   return (
@@ -121,6 +133,17 @@ const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
         </Row>
         <Row className='mb-3'>
           <p>Number of Units in Stock: {completeToysInStock}</p>
+          <p>
+            Total Units that can be built from current parts:{' '}
+            {getBuildCapacity()}{' '}
+          </p>
+          <p>
+            <i>
+              *Note that more toys will be built automatically if number of
+              units invoiced is exceeds number of units in stock but is within
+              the build threshold.{' '}
+            </i>
+          </p>
         </Row>
         <Button as={Link} variant='secondary' to='/invoices'>
           Cancel

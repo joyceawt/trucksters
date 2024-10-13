@@ -8,6 +8,12 @@ export const UtilityBar = ({
   showButton = true,
   customComponent = null,
 }) => {
+  const showCustomComponent = () => {
+    if (customComponent !== null && !showButton) {
+      return customComponent()
+    }
+    return null
+  }
   return (
     <>
       <div className='d-flex pt-3'>
@@ -23,7 +29,7 @@ export const UtilityBar = ({
               <i className='bi bi-plus-lg fs-4' />
             </Button>
           )}
-          {!showButton && customComponent()}
+          {showCustomComponent()}
         </div>
       </div>
     </>

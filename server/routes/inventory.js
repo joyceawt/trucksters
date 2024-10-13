@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     const product = await Product.findOne()
     res.json({
       inventory,
-      complete_toys_in_stock: product.quantity,
+      complete_toys_in_stock: product?.quantity || 0,
     })
   } catch (err) {
     res.status(500).json({ message: err.message })

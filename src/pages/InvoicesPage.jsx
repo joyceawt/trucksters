@@ -41,6 +41,8 @@ export const InvoicesPage = ({ createInvoice }) => {
     fetchInvoices()
   }, [])
 
+  const utilityTitle = createInvoice ? 'Create Invoice' : 'Invoices History'
+
   const displayComponent = createInvoice ? (
     <CreateInvoice onCreateInvoice={onCreateInvoice} />
   ) : (
@@ -50,10 +52,7 @@ export const InvoicesPage = ({ createInvoice }) => {
   return (
     <>
       <section>
-        <UtilityBar
-          contentTitle='Invoices History'
-          addLink='/invoices/create'
-        />
+        <UtilityBar contentTitle={utilityTitle} addLink='/invoices/create' />
       </section>
 
       {displayComponent}
