@@ -4,12 +4,10 @@ import { IncomeStatementTable, UtilityBar, DatePicker } from '../components'
 import { Row, Form, Col } from 'react-bootstrap'
 
 const IncomeStatementPage = () => {
-  const oneYearAgo = new Date(
-    new Date().setFullYear(new Date().getFullYear() - 1)
-  )
+  const startOfYear = new Date(new Date().getFullYear(), 0, 1)
   const [incomeStatement, setIncomeStatement] = useState(null)
   const [startDate, setStartDate] = useState(
-    oneYearAgo.toISOString().split('T')[0]
+    startOfYear.toISOString().split('T')[0]
   )
   const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0])
   const [expenses, setExpenses] = useState([])
@@ -82,7 +80,7 @@ const IncomeStatementPage = () => {
     <>
       <section>
         <UtilityBar
-          contentTitle='Balance Sheet'
+          contentTitle='Income Statement'
           customComponent={DatePickerComponent}
           showButton={false}
         />
