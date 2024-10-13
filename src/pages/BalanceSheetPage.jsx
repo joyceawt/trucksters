@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { BalanceSheetTable, UtilityBar } from '../components'
-import { Form } from 'react-bootstrap'
+import { BalanceSheetTable, UtilityBar, DatePicker } from '../components'
 
 const BalanceSheetPage = () => {
   const [balanceSheet, setBalanceSheet] = useState(null)
@@ -9,11 +8,13 @@ const BalanceSheetPage = () => {
     new Date().toISOString().split('T')[0]
   )
 
+  const BALANCE_SHEET_PATH = 'http://localhost:4000/api/balance-sheet'
+
   useEffect(() => {
     const fetchBalanceSheet = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:4000/api/balance-sheet?date=${balanceDate}`
+          `${BALANCE_SHEET_PATH}?date=${balanceDate}`
         )
 
         setBalanceSheet(data)
@@ -25,19 +26,15 @@ const BalanceSheetPage = () => {
     fetchBalanceSheet()
   }, [balanceDate])
 
-  const datePicker = () => {
+  const datePickerComponent = () => {
     return (
-      <>
-        <Form.Label htmlFor='date'>Change Date:</Form.Label>
-        <Form.Control
-          type='date'
-          id='balance-date'
-          name='balance-date'
-          aria-describedby='balance-date'
-          value={balanceDate}
-          onChange={(e) => setBalanceDate(e.target.value)}
-        />
-      </>
+      <DatePicker
+        id='balance-date'
+        name='balance-date'
+        label='Change Date:'
+        value={balanceDate}
+        onChange={(e) => setBalanceDate(e.target.value)}
+      />
     )
   }
 
@@ -46,7 +43,7 @@ const BalanceSheetPage = () => {
       <section>
         <UtilityBar
           contentTitle='Balance Sheet'
-          customComponent={datePicker}
+          customComponent={datePickerComponent}
           showButton={false}
         />
       </section>

@@ -21,6 +21,8 @@ import CreatePurchaseOrder from './CreatePurchaseOrder'
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseOrdersList from './PurchaseOrdersList'
 import BalanceSheetTable from './BalanceSheetTable'
+import DatePicker from './DatePicker'
+import IncomeStatementTable from './IncomeStatementTable'
 
 export {
   Nav,
@@ -46,4 +48,6 @@ export {
   PurchaseOrder,
   PurchaseOrdersList,
   BalanceSheetTable,
+  DatePicker,
+  IncomeStatementTable,
 }
