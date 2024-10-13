@@ -143,7 +143,9 @@ function Nav() {
               aria-current='page'
               to='/balance-sheet'
             >
-              <FaBalanceScale className='bi' />
+              {({ isActive }) => (
+                <FaBalanceScale className={'bi' + fill(isActive)} />
+              )}
             </NavLink>
           </OverlayTrigger>
         </li>

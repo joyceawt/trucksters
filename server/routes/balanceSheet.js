@@ -105,7 +105,7 @@ const generateBalanceSheet = async (balanceDate) => {
   }
 }
 
-router.get('/balance-sheet', async (req, res) => {
+router.get('/', async (req, res) => {
   const balanceDate = req.query.date ? new Date(req.query.date) : new Date()
   try {
     const balanceSheet = await generateBalanceSheet(balanceDate)

@@ -52,6 +52,11 @@ article {
 
 }
 
+.nav-link>.bi-fill {
+  color: var(--custom-dark-blue);
+
+}
+
 .greeting {
   color: #A64D79;
 }
