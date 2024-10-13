@@ -1,5 +1,5 @@
 // Federal Tax Data from https://www.nerdwallet.com/article/taxes/federal-income-tax-brackets#:~:text=In%202024%2C%20there%20are%20seven,annually%20to%20account%20for%20inflation.
-const calculateFederalTax = (salary, filingStatus) => {
+const calculateFederalTax = (salary) => {
   let tax = 0
 
   // Single and not married
