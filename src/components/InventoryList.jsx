@@ -1,4 +1,4 @@
-const InventoryList = ({ inventoryItems }) => {
+const InventoryList = ({ inventoryItems, completeToysInStock }) => {
   const inventoryItemValue = (inventoryItem) => {
     return inventoryItem.price_per_unit * inventoryItem.quantity
   }
@@ -29,12 +29,6 @@ const InventoryList = ({ inventoryItems }) => {
     })
 
     return Math.min(...toysPerPart)
-  }
-
-  const completeUnitsInStock = () => {
-    return inventoryItems
-      .map((item) => item.complete_units_in_stock)
-      .reduce((a, b) => a + b, 0)
   }
 
   const totalValue = () => {
@@ -96,7 +90,7 @@ const InventoryList = ({ inventoryItems }) => {
           </thead>
           <tbody className='table-group-divider'>
             <tr>
-              <td>{completeUnitsInStock()}</td>
+              <td>{completeToysInStock}</td>
               <td>${totalValue().toFixed(2)}</td>
             </tr>
           </tbody>

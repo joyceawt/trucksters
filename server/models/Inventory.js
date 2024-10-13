@@ -7,7 +7,7 @@ const InventorySchema = new mongoose.Schema({
   reorder_points: { type: Number, default: 30 },
   vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
   units_per_toy: { type: Number, required: true },
-  complete_units_in_stock: { type: Number, default: 0 },
+  cost_per_toy: { type: Number, required: true },
 })
 
 module.exports = mongoose.model('Inventory', InventorySchema)

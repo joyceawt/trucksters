@@ -10,12 +10,15 @@ export const allInventory = async () => {
 
 export const InventoryPage = () => {
   const [inventoryItems, setInventoryItems] = useState([])
+  const [completeToysInStock, setCompleteToysInStock] = useState(0)
 
   const fetchInventory = async () => {
     try {
       const { data } = await allInventory()
+      const { inventory, complete_toys_in_stock } = data
 
-      setInventoryItems(data)
+      setInventoryItems(inventory)
+      setCompleteToysInStock(complete_toys_in_stock)
     } catch (err) {
       console.error(err)
     }
@@ -31,7 +34,10 @@ export const InventoryPage = () => {
         <UtilityBar contentTitle='Inventory' />
       </section>
 
-      <InventoryList inventoryItems={inventoryItems} />
+      <InventoryList
+        inventoryItems={inventoryItems}
+        completeToysInStock={completeToysInStock}
+      />
     </>
   )
 }
