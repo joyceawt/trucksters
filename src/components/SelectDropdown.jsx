@@ -27,6 +27,8 @@ export const Select = ({
     if (optionDisplay) {
       if (Array.isArray(optionDisplay)) {
         return option[optionDisplay[0]] + ' ' + option[optionDisplay[1]]
+      } else {
+        return option[optionDisplay]
       }
     } else {
       return option

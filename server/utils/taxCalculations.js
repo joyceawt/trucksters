@@ -1,5 +1,5 @@
 // Federal Tax Data from https://www.nerdwallet.com/article/taxes/federal-income-tax-brackets#:~:text=In%202024%2C%20there%20are%20seven,annually%20to%20account%20for%20inflation.
-export const calculateFederalTax = (salary, filingStatus) => {
+const calculateFederalTax = (salary, filingStatus) => {
   let tax = 0
 
   // Single and not married
@@ -25,7 +25,7 @@ export const calculateFederalTax = (salary, filingStatus) => {
 }
 
 // Calculate state tax (Illinois only for now, based on https://www.nerdwallet.com/article/taxes/state-income-tax-rates#2024%20state%20income%20tax%20rates)
-export const calculateStateTax = (salary, state) => {
+const calculateStateTax = (salary, state) => {
   const stateTaxRates = {
     Illinois: 0.0495,
   }
@@ -35,7 +35,7 @@ export const calculateStateTax = (salary, state) => {
 }
 
 // Calculate Social Security and Medicare taxes (based on https://www.irs.gov/taxtopics/tc751)
-export const calculateFICA = (salary) => {
+const calculateFICA = (salary) => {
   const socialSecurityTax = salary <= 168600 ? salary * 0.062 : 168600 * 0.062
   const medicareTax = salary * 0.0145
   const additionalMedicareTax = salary > 200000 ? (salary - 200000) * 0.009 : 0
@@ -46,3 +46,4 @@ export const calculateFICA = (salary) => {
     additionalMedicareTax,
   }
 }
+module.exports = { calculateFederalTax, calculateStateTax, calculateFICA }

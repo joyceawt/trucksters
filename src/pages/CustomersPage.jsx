@@ -4,7 +4,7 @@ import { CustomersList, UtilityBar, AddCustomer } from '../components'
 
 const CUSTOMERS_PATH = 'http://localhost:4000/api/customers'
 
-const allCustomers = async () => {
+export const allCustomers = async () => {
   return await axios.get(CUSTOMERS_PATH)
 }
 

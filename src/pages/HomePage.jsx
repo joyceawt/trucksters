@@ -55,7 +55,7 @@ function HomePage() {
                 <p className='card-text'>
                   Pay employees and view the payroll.{' '}
                 </p>
-                <Button variant='primary' as={Link} to='/pay-employee'>
+                <Button variant='primary' as={Link} to='/payroll'>
                   Pay Employee
                 </Button>{' '}
                 <Button variant='primary' as={Link} to='/payroll'>

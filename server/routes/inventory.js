@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Inventory = require('../models/Inventory')
+const Vendor = require('../models/Vendor')
 
 router.get('/', async (req, res) => {
   try {
@@ -22,19 +23,20 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const { item_name, quantity, unit_cost, reorder_point, type, vendor_id } =
-    req.body
-
-  const item = new Inventory({
-    item_name: item_name,
-    quantity: quantity,
-    unit_cost: unit_cost,
-    reorder_point: reorder_point,
-    type: type,
-    vendor_id: vendor_id,
-  })
+  const { part, quantity, pricePerUnit, reorderPoints, unitsPerToy } = req.body
 
   try {
+    const vendor = await Vendor.findOne({ part })
+
+    const item = new Inventory({
+      part: part,
+      quantity: quantity,
+      price_per_unit: pricePerUnit,
+      vendorId: vendor._id || null,
+      reorder_points: reorderPoints,
+      units_per_toy: unitsPerToy,
+    })
+
     const newItem = await item.save()
     res.status(201).json(newItem)
   } catch (err) {

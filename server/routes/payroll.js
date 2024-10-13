@@ -5,7 +5,7 @@ const {
   calculateFederalTax,
   calculateStateTax,
   calculateFICA,
-} = require('../utils/taxUtils')
+} = require('../utils/taxCalculations')
 
 router.post('/payroll/:employeeId', async (req, res) => {
   const { employeeId } = req.params

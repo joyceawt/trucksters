@@ -1,17 +1,13 @@
 const mongoose = require('mongoose')
 
 const InventorySchema = new mongoose.Schema({
-  item_name: { type: String, required: true },
+  part: { type: String, required: true },
   quantity: { type: Number, required: true, default: 0 },
-  unit_cost: { type: Number, required: true },
-  reorder_point: { type: Number, default: 10 },
-  type: {
-    type: String,
-    enum: ['raw_material', 'finished_good'],
-    required: true,
-  },
+  price_per_unit: { type: Number, required: true },
+  reorder_points: { type: Number, default: 30 },
   vendor_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
-  created_at: { type: Date, default: Date.now },
+  units_per_toy: { type: Number, required: true },
+  complete_units_in_stock: { type: Number, default: 0 },
 })
 
 module.exports = mongoose.model('Inventory', InventorySchema)

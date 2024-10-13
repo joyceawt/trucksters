@@ -39,4 +39,5 @@ const EmployeeSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now },
 })
 
-module.exports = mongoose.model('Employee', EmployeeSchema)
+module.exports =
+  mongoose.models.Employee || mongoose.model('Employee', EmployeeSchema)

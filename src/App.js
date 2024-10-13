@@ -10,6 +10,8 @@ import {
   CustomersPage,
   VendorsPage,
   PayrollPage,
+  InventoryPage,
+  InvoicesPage,
 } from './pages'
 
 function App() {
@@ -52,7 +54,15 @@ function App() {
                     element={<VendorsPage addVendor={true} />}
                   />
                   <Route path='/payroll' element={<PayrollPage />} />
-                  <Route path='/payroll' element={<PayrollPage />} />
+                  <Route path='/inventory' element={<InventoryPage />} />
+                  <Route
+                    path='/invoices'
+                    element={<InvoicesPage createInvoice={false} />}
+                  />
+                  <Route
+                    path='/invoices/create'
+                    element={<InvoicesPage createInvoice={true} />}
+                  />
                 </Routes>
                 <Footer />
               </main>

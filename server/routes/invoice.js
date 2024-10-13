@@ -1,11 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const Invoice = require('../models/Invoice')
+const Customer = require('../models/Customer')
+const Inventory = require('../models/Inventory')
+
+const TOY_PRICE_PER_UNIT = 2.5
 
 router.get('/', async (req, res) => {
   try {
-    const invoices = await Invoice.find()
-    res.json(invoices)
+    const invoices = await Invoice.find().populate('customer').exec()
+    const inventory = await Inventory.findOne()
+
+    res.json({
+      invoices,
+      complete_units_in_stock: inventory?.complete_units_in_stock || 0,
+    })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
@@ -22,13 +31,22 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const { customer_id, invoice_date, items, total_amount } = req.body
+  const { customerId, quantity } = req.body
+
+  const customer = await Customer.findById(customerId)
+  if (!customer) {
+    return res.status(404).json({ message: 'Customer not found' })
+  }
+
+  const totalAmount = quantity * TOY_PRICE_PER_UNIT
+  const invoiceNumber = Invoice.countDocuments() + 1
 
   const invoice = new Invoice({
-    customer_id,
-    invoice_date,
-    items,
-    total_amount,
+    price_per_unit: TOY_PRICE_PER_UNIT,
+    customer: customerId,
+    quantity: quantity,
+    total_amount: totalAmount,
+    invoice_number: invoiceNumber,
   })
 
   try {

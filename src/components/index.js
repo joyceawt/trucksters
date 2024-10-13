@@ -13,6 +13,10 @@ import VendorsList from './VendorsList'
 import AddVendor from './AddVendor'
 import PayrollList from './PayrollList'
 import SelectDropdown from './SelectDropdown'
+import InventoryList from './InventoryList'
+import InvoicesList from './InvoicesList'
+import CreateInvoice from './CreateInvoice'
+import Invoice from './Invoice'
 
 export {
   Nav,
@@ -30,4 +34,8 @@ export {
   AddVendor,
   PayrollList,
   SelectDropdown,
+  InventoryList,
+  InvoicesList,
+  CreateInvoice,
+  Invoice,
 }
