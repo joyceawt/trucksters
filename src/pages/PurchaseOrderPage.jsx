@@ -41,6 +41,10 @@ export const PurchaseOrderPage = ({ createPO }) => {
     return false
   }
 
+  const displayContentTitle = createPO
+    ? 'Create Purchase Order'
+    : 'Purchase Order History'
+
   useEffect(() => {
     fetchPurchaseOrders()
   }, [])
@@ -54,10 +58,7 @@ export const PurchaseOrderPage = ({ createPO }) => {
   return (
     <>
       <section>
-        <UtilityBar
-          contentTitle='Purchase Order History'
-          addLink='/po/create'
-        />
+        <UtilityBar contentTitle={displayContentTitle} addLink='/po/create' />
       </section>
 
       {displayComponent}

@@ -41,6 +41,8 @@ export const CustomersPage = ({ addCustomer }) => {
     fetchCustomers()
   }, [])
 
+  const displayContentTitle = addCustomer ? 'Add Customer' : 'Customers'
+
   const displayComponent = addCustomer ? (
     <AddCustomer onAddCustomer={onAddCustomer} />
   ) : (
@@ -50,7 +52,10 @@ export const CustomersPage = ({ addCustomer }) => {
   return (
     <>
       <section>
-        <UtilityBar contentTitle='Customers' addLink='/customers/add' />
+        <UtilityBar
+          contentTitle={displayContentTitle}
+          addLink='/customers/add'
+        />
       </section>
 
       {displayComponent}

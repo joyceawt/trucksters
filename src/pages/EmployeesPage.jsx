@@ -41,6 +41,8 @@ export const EmployeesPage = ({ addEmployee }) => {
     fetchEmployees()
   }, [])
 
+  const displayContentTitle = addEmployee ? 'Add Employee' : 'Employees'
+
   const displayComponent = addEmployee ? (
     <AddEmployee onAddEmployee={onAddEmployee} />
   ) : (
@@ -50,7 +52,10 @@ export const EmployeesPage = ({ addEmployee }) => {
   return (
     <>
       <section>
-        <UtilityBar contentTitle='Employees' addLink='/employees/add' />
+        <UtilityBar
+          contentTitle={displayContentTitle}
+          addLink='/employees/add'
+        />
       </section>
 
       {displayComponent}

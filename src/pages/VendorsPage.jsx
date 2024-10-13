@@ -37,6 +37,8 @@ export const VendorsPage = ({ addVendor }) => {
     return false
   }
 
+  const displayContentTitle = addVendor ? 'Add Vendor' : 'Vendors'
+
   useEffect(() => {
     fetchVendors()
   }, [])
@@ -50,7 +52,7 @@ export const VendorsPage = ({ addVendor }) => {
   return (
     <>
       <section>
-        <UtilityBar contentTitle='Vendors' addLink='/vendors/add' />
+        <UtilityBar contentTitle={displayContentTitle} addLink='/vendors/add' />
       </section>
 
       {displayComponent}
