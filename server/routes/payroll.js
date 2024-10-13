@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const EmployeeModel = require('../models/employee')
+const EmployeeModel = require('../models/Employee')
 const {
   calculateFederalTax,
   calculateStateTax,

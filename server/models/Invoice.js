@@ -11,6 +11,7 @@ const InvoiceSchema = new mongoose.Schema({
   price_per_unit: { type: Number, required: true },
   total_amount: { type: Number, required: true },
   date: { type: Date, default: Date.now },
+  due_date: { type: Date, required: true },
 })
 
 module.exports = mongoose.model('Invoice', InvoiceSchema)

@@ -21,35 +21,30 @@ const generateBalanceSheet = async (balanceDate) => {
   let netWorth = 0
   let payrollExpenses = 0
 
-  // Get end of month based on balanceDate (BS will always show end of month)
-  const endOfMonth = new Date(
-    balanceDate.getFullYear(),
-    balanceDate.getMonth() + 1,
-    0
-  )
-  endOfMonth.setHours(23, 59, 59, 999) // Set to the end of the last day of the month
+  const normalizedBalanceDate = normalizeDate(balanceDate)
 
   // Assets
   // Accounts Receivable
   const invoices = await Invoice.find()
   invoices.forEach((invoice) => {
-    const invoiceDate = normalizeDate(invoice.date)
-    // If the invoice is issued this month or earlier, convert it to cash
-    if (invoiceDate <= endOfMonth) {
+    const dueDate = normalizeDate(invoice.due_date)
+
+    // if invoice is due before balance sheet, it is considered paid
+    if (dueDate <= normalizedBalanceDate) {
       cash += invoice.total_amount
     } else {
-      accountsReceivable += invoice.total_amount
+      accountsReceivable += invoice.total_amount // Otherwise, it stays in AR
     }
   })
 
   // payroll expenses (every month)
   const employees = await Employee.find()
+
   employees.forEach((employee) => {
     employee.payroll.forEach((payroll) => {
       const payrollDate = normalizeDate(payroll.date_paid)
 
-      // If the payroll is paid during this month or earlier, count it
-      if (payrollDate <= endOfMonth) {
+      if (payrollDate < normalizedBalanceDate) {
         payrollExpenses += payroll.amount_paid
       }
     })
@@ -76,13 +71,13 @@ const generateBalanceSheet = async (balanceDate) => {
 
   const POs = await PurchaseOrder.find()
   POs.forEach((po) => {
-    const poDate = normalizeDate(po.date)
+    const dueDate = normalizeDate(po.due_date)
 
-    // If the PO is issued this month or earlier, pay it from cash
-    if (poDate <= endOfMonth) {
-      cash -= po.total_cost
+    // If the PO is due by or before the balance date, treat it as paid
+    if (dueDate <= normalizedBalanceDate) {
+      cash -= po.total_cost // Deduct from cash
     } else {
-      accountsPayable += po.total_cost
+      accountsPayable += po.total_cost // Otherwise, it remains unpaid
     }
   })
 

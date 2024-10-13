@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const PurchaseOrderSchema = new mongoose.Schema({
   po_number: { type: Number, required: true },
   date: { type: Date, default: Date.now },
+  due_date: { type: Date, required: true },
   supplier: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Vendor',
