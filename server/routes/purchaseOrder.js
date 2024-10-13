@@ -37,33 +37,34 @@ router.post('/', async (req, res) => {
     const totalCost = quantity * pricePerUnit
     const poNumber = PurchaseOrder.countDocuments() + 1
 
+    // purchased quantity often differs from the requested quantity
+    // randomize adding and subtracting 10% of requested quantity
+    const randomIncrease = Math.random() < 0.5 ? true : false
+    let quantityReceived = 0
+    if (randomIncrease) {
+      quantityReceived = Math.ceil(quantity * 1.1)
+    } else {
+      quantityReceived = Math.floor(quantity * 0.9)
+    }
+
     const newPurchaseOrder = new PurchaseOrder({
       po_number: poNumber,
       supplier: supplierId,
       part: partId,
-      quantity: quantity,
+      quantity: quantityReceived,
+      ordered_quantity: quantity,
       price_per_unit: pricePerUnit,
       total_cost: totalCost,
     })
 
     const savedPurchaseOrder = await newPurchaseOrder.save()
 
-    // purchased quantity often differs from the requested quantity
-    // randomize adding and subtracting 10% of requested quantity
-    const randomIncrease = Math.random() < 0.5 ? true : false
-    let adjustedQuantity = 0
-    if (randomIncrease) {
-      adjustedQuantity = Math.ceil(quantity * 1.1)
-      inventoryItem.quantity += adjustedQuantity
-    } else {
-      adjustedQuantity = Math.floor(quantity * 0.9)
-      inventoryItem.quantity -= adjustedQuantity
-    }
+    inventoryItem.quantity += quantityReceived
 
     await inventoryItem.save()
 
     res.status(201).json({
-      message: 'Purchase order created successfully',
+      message: `Purchase order created successfully, received ${quantityReceived} parts.`,
       purchaseOrder: savedPurchaseOrder,
       updatedInventory: inventoryItem,
     })

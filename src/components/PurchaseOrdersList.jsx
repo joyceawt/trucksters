@@ -12,7 +12,8 @@ const PurchaseOrdersList = ({ purchaseOrders }) => {
               <th>Date</th>
               <th>Supplier</th>
               <th>Part</th>
-              <th>Quantity</th>
+              <th>Quantity Ordered</th>
+              <th>Quantity Received</th>
               <th>Price/Part</th>
               <th>Total</th>
             </tr>

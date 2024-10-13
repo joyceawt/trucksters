@@ -5,6 +5,7 @@ const PurchaseOrder = ({ po }) => {
       <td>{new Date(po.date).toLocaleDateString()}</td>
       <td>{po.supplier}</td>
       <td>{po.part}</td>
+      <td>{po.ordered_quantity}</td>
       <td>{po.quantity}</td>
       <td>{po.price_per_part}</td>
       <td>{po.total_cost.toFixed(2)}</td>

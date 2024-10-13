@@ -13,7 +13,8 @@ const PurchaseOrderSchema = new mongoose.Schema({
     ref: 'Inventory',
     required: true,
   },
-  quantity: { type: Number, required: true },
+  quantity: { type: Number, required: true }, // quantity received
+  ordered_quantity: { type: Number, required: true }, // quantity ordered
   price_per_unit: { type: Number, required: true },
   total_cost: { type: Number, required: true },
 })
