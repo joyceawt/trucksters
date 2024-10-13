@@ -5,7 +5,7 @@ const InventorySchema = new mongoose.Schema({
   quantity: { type: Number, required: true, default: 0 },
   price_per_unit: { type: Number, required: true },
   reorder_points: { type: Number, default: 30 },
-  vendor_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
+  vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
   units_per_toy: { type: Number, required: true },
   complete_units_in_stock: { type: Number, default: 0 },
 })

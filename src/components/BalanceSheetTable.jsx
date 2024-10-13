@@ -28,6 +28,13 @@ const BalanceSheetTable = ({ balanceSheet }) => {
 
   return (
     <section className='d-flex flex-column justify-content-evenly custom-size'>
+      <p>
+        <i>
+          {' '}
+          *Note that balance sheet will always show data for end of month
+          selected
+        </i>
+      </p>
       <article className='card table-responsive bg-white'>
         <table className='table table-striped table-hover'>
           <caption></caption>

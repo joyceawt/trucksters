@@ -5,6 +5,12 @@ const PurchaseOrder = require('../models/PurchaseOrder')
 const Employee = require('../models/Employee')
 const Inventory = require('../models/Inventory')
 
+const normalizeDate = (date) => {
+  const newDate = new Date(date)
+  newDate.setHours(0, 0, 0, 0)
+  return newDate
+}
+
 const generateBalanceSheet = async (balanceDate) => {
   const STARTING_CASH = 200000
   let cash = STARTING_CASH
@@ -15,32 +21,38 @@ const generateBalanceSheet = async (balanceDate) => {
   let netWorth = 0
   let payrollExpenses = 0
 
-  // Calculate age in days
-  const calculateAgeInDays = (date) => {
-    return (
-      (balanceDate.getTime() - new Date(date).getTime()) / (1000 * 3600 * 24)
-    )
-  }
+  // Get end of month based on balanceDate (BS will always show end of month)
+  const endOfMonth = new Date(
+    balanceDate.getFullYear(),
+    balanceDate.getMonth() + 1,
+    0
+  )
+  endOfMonth.setHours(23, 59, 59, 999) // Set to the end of the last day of the month
 
-  //Assets
+  // Assets
   // Accounts Receivable
   const invoices = await Invoice.find()
   invoices.forEach((invoice) => {
-    const invoiceAge = calculateAgeInDays(invoice.date)
-    if (invoiceAge >= 30) {
-      cash += invoice.total_amount // Move receivable to cash after 30 days
+    const invoiceDate = normalizeDate(invoice.date)
+    // If the invoice is issued this month or earlier, convert it to cash
+    if (invoiceDate <= endOfMonth) {
+      cash += invoice.total_amount
     } else {
-      accountsReceivable += invoice.total_amount // Else, it is still in accounts receivable
+      accountsReceivable += invoice.total_amount
     }
   })
 
   // payroll expenses (every month)
   const employees = await Employee.find()
   employees.forEach((employee) => {
-    payrollExpenses += employee.payroll.reduce(
-      (acc, payroll) => acc + payroll.amount_paid,
-      0
-    )
+    employee.payroll.forEach((payroll) => {
+      const payrollDate = normalizeDate(payroll.date_paid)
+
+      // If the payroll is paid during this month or earlier, count it
+      if (payrollDate <= endOfMonth) {
+        payrollExpenses += payroll.amount_paid
+      }
+    })
   })
 
   cash -= payrollExpenses
@@ -64,11 +76,13 @@ const generateBalanceSheet = async (balanceDate) => {
 
   const POs = await PurchaseOrder.find()
   POs.forEach((po) => {
-    const poAge = calculateAgeInDays(po.date)
-    if (poAge >= 30) {
-      cash -= po.total_cost // Deduct from cash after 30 days
+    const poDate = normalizeDate(po.date)
+
+    // If the PO is issued this month or earlier, pay it from cash
+    if (poDate <= endOfMonth) {
+      cash -= po.total_cost
     } else {
-      accountsPayable += po.total_cost // Else, it's still in accounts payable
+      accountsPayable += po.total_cost
     }
   })
 

@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
       return res.status(404).json({ message: 'Inventory part not found' })
     }
 
-    const supplierId = inventoryItem.vendor_id._id
+    const supplierId = inventoryItem.vendor._id
     const pricePerUnit = inventoryItem.price_per_unit
     const totalCost = quantity * pricePerUnit
     const poNumber = PurchaseOrder.countDocuments() + 1
@@ -48,7 +48,18 @@ router.post('/', async (req, res) => {
 
     const savedPurchaseOrder = await newPurchaseOrder.save()
 
-    inventoryItem.quantity += quantity
+    // purchased quantity often differs from the requested quantity
+    // randomize adding and subtracting 10% of requested quantity
+    const randomIncrease = Math.random() < 0.5 ? true : false
+    let adjustedQuantity = 0
+    if (randomIncrease) {
+      adjustedQuantity = Math.ceil(quantity * 1.1)
+      inventoryItem.quantity += adjustedQuantity
+    } else {
+      adjustedQuantity = Math.floor(quantity * 0.9)
+      inventoryItem.quantity -= adjustedQuantity
+    }
+
     await inventoryItem.save()
 
     res.status(201).json({
