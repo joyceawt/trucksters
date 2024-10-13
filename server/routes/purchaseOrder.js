@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const PurchaseOrder = require('../models/PurchaseOrder')
+const Inventory = require('../models/Inventory')
 
 router.get('/', async (req, res) => {
   try {
@@ -23,24 +24,43 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const { vendor_id, order_date, items, total_cost } = req.body
-
-  const order = new PurchaseOrder({
-    vendor_id: vendor_id,
-    order_date: order_date,
-    items: items,
-    total_cost: total_cost,
-  })
+  const { partId, quantity } = req.body
 
   try {
-    const newOrder = await order.save()
-    res.status(201).json(newOrder)
+    const inventoryItem = await Inventory.findById(partId)
+    if (!inventoryItem) {
+      return res.status(404).json({ message: 'Inventory part not found' })
+    }
+
+    const supplierId = inventoryItem.vendor_id._id
+    const pricePerUnit = inventoryItem.price_per_unit
+    const totalCost = quantity * pricePerUnit
+    const poNumber = PurchaseOrder.countDocuments() + 1
+
+    const newPurchaseOrder = new PurchaseOrder({
+      po_number: poNumber,
+      supplier: supplierId,
+      part: partId,
+      quantity: quantity,
+      price_per_unit: pricePerUnit,
+      total_cost: totalCost,
+    })
+
+    const savedPurchaseOrder = await newPurchaseOrder.save()
+
+    inventoryItem.quantity += quantity
+    await inventoryItem.save()
+
+    res.status(201).json({
+      message: 'Purchase order created successfully',
+      purchaseOrder: savedPurchaseOrder,
+      updatedInventory: inventoryItem,
+    })
   } catch (err) {
     res.status(400).json({ message: err.message })
   }
 })
 
-// Update a purchase order
 router.put('/:id', async (req, res) => {
   try {
     const order = await PurchaseOrder.findById(req.params.id)

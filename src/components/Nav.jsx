@@ -125,11 +125,7 @@ function Nav() {
             delay={{ show: 250, hide: 400 }}
             overlay={<Tooltip id='customers-tooltip'>{'PO'}</Tooltip>}
           >
-            <NavLink
-              className='nav-link py-3'
-              aria-current='page'
-              to='/purchase-orders'
-            >
+            <NavLink className='nav-link py-3' aria-current='page' to='/po'>
               <i className='bi bi-bag' />
             </NavLink>
           </OverlayTrigger>

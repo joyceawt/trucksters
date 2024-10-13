@@ -12,6 +12,7 @@ import {
   PayrollPage,
   InventoryPage,
   InvoicesPage,
+  PurchaseOrderPage,
 } from './pages'
 
 function App() {
@@ -62,6 +63,14 @@ function App() {
                   <Route
                     path='/invoices/create'
                     element={<InvoicesPage createInvoice={true} />}
+                  />
+                  <Route
+                    path='/po'
+                    element={<PurchaseOrderPage createPO={false} />}
+                  />
+                  <Route
+                    path='/po/create'
+                    element={<PurchaseOrderPage createPO={true} />}
                   />
                 </Routes>
                 <Footer />

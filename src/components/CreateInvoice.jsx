@@ -39,6 +39,16 @@ const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
     e.preventDefault()
     setValidated(true)
 
+    if (quantity <= 0) {
+      alert('Quantity must be a positive number.')
+      return
+    }
+
+    if (quantity > completeUnitsInStock) {
+      alert('Quantity exceeds available units in stock.')
+      return
+    }
+
     if (form.checkValidity() === false) {
       e.stopPropagation()
     } else {
@@ -67,7 +77,7 @@ const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
             <Form.Label className='col-form-label'>Customer:</Form.Label>
             <SelectDropdown
               className={'form-select mb-3 bg-transparent'}
-              ariaLabel={'employee_id'}
+              ariaLabel={'customer_id'}
               onChangeHandler={handleCustomerSelection}
               id={'selectInvoiceCustomer'}
               name={'customer_id'}

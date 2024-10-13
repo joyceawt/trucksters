@@ -89,10 +89,10 @@ function HomePage() {
                 <p className='card-text'>
                   Preview all vendors and add vendors.{' '}
                 </p>
-                <Button variant='primary' as={Link} to='/customers'>
+                <Button variant='primary' as={Link} to='/vendors'>
                   View Vendors
                 </Button>{' '}
-                <Button variant='primary' as={Link} to='/customers/add'>
+                <Button variant='primary' as={Link} to='/vendors/add'>
                   Add Vendor
                 </Button>{' '}
               </div>
@@ -118,7 +118,7 @@ function HomePage() {
                 <p className='card-text'>
                   Create an invoice and preview invoice history.{' '}
                 </p>
-                <Button variant='primary' as={Link} to='/invoices/add'>
+                <Button variant='primary' as={Link} to='/invoices/create'>
                   Create Invoice
                 </Button>{' '}
                 <Button variant='primary' as={Link} to='/invoices'>
@@ -133,10 +133,10 @@ function HomePage() {
               <div className='card-body'>
                 <h5 className='card-title'>Purchase Order</h5>
                 <p className='card-text'>Create PO and preview PO history.</p>
-                <Button variant='primary' as={Link} to='/invoices/add'>
+                <Button variant='primary' as={Link} to='/po/create'>
                   Create PO
                 </Button>{' '}
-                <Button variant='primary' as={Link} to='/invoices'>
+                <Button variant='primary' as={Link} to='/po'>
                   PO History
                 </Button>{' '}
               </div>

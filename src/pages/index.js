@@ -5,6 +5,7 @@ import VendorsPage from './VendorsPage'
 import PayrollPage from './PayrollPage'
 import InventoryPage from './InventoryPage'
 import InvoicesPage from './InvoicesPage'
+import PurchaseOrderPage from './PurchaseOrderPage'
 
 export {
   HomePage,
@@ -14,4 +15,5 @@ export {
   PayrollPage,
   InventoryPage,
   InvoicesPage,
+  PurchaseOrderPage,
 }

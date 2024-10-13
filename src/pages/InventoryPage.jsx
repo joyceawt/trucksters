@@ -4,7 +4,7 @@ import { InventoryList, UtilityBar } from '../components'
 
 const INVENTORY_PATH = 'http://localhost:4000/api/inventory'
 
-const allInventory = async () => {
+export const allInventory = async () => {
   return await axios.get(INVENTORY_PATH)
 }
 

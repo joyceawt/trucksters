@@ -17,6 +17,9 @@ import InventoryList from './InventoryList'
 import InvoicesList from './InvoicesList'
 import CreateInvoice from './CreateInvoice'
 import Invoice from './Invoice'
+import CreatePurchaseOrder from './CreatePurchaseOrder'
+import PurchaseOrder from './PurchaseOrder'
+import PurchaseOrdersList from './PurchaseOrdersList'
 
 export {
   Nav,
@@ -38,4 +41,7 @@ export {
   InvoicesList,
   CreateInvoice,
   Invoice,
+  CreatePurchaseOrder,
+  PurchaseOrder,
+  PurchaseOrdersList,
 }
