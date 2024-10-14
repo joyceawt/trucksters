@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { SelectDropdown } from '.'
 import { allCustomers } from '../pages/CustomersPage'
 import { allInventory } from '../pages/InventoryPage'
-import { buildCapacity } from '../components/InventoryList'
+import { buildCapacity } from './InventoryList'
 
 const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
   const [customers, setCustomers] = useState([])
