@@ -16,6 +16,8 @@ export const PayrollPage = () => {
       const { data } = await allEmployees()
 
       setEmployees(data)
+      setSelectedEmployee(data[0])
+      setPayrollHistory(data[0].payroll || [])
     } catch (err) {
       console.error(err)
     }
@@ -25,8 +27,7 @@ export const PayrollPage = () => {
     fetchEmployees()
   }, [])
 
-  const handleEmployeeSelection = (e) => {
-    const employeeId = e.target.value
+  const handleEmployeeSelection = (employeeId) => {
     const selectedEmp = employees.find(
       (employee) => employee._id === employeeId
     )
@@ -44,8 +45,9 @@ export const PayrollPage = () => {
       const { data } = await axios.post(
         `${PAYROLL_PROCESS_URL}/${selectedEmployee._id}`
       )
+      const { payrollEvent } = data
 
-      setPayrollHistory([...payrollHistory, data.payrollEvent])
+      setPayrollHistory([...payrollHistory, payrollEvent])
     } catch (err) {
       if (err && err.response && err.response.data) {
         alert(`Error processing payroll: ${err.response.data.message}`)
@@ -59,20 +61,25 @@ export const PayrollPage = () => {
 
   const selectEmployee = () => {
     return (
-      <Form.Group className='mb-3' controlId='selectEmployeePayroll'>
-        <Form.Label className='col-form-label'>Employee</Form.Label>
-        <SelectDropdown
-          className={'form-select mb-3 bg-transparent'}
-          ariaLabel={'employee_id'}
-          onChangeHandler={handleEmployeeSelection}
-          id={'selectEmployeePayroll'}
-          name={'employee_id'}
-          selectOptions={employees}
-          optionValue={'_id'}
-          optionDisplay={['first_name', 'last_name']}
-          selectedOption={selectedEmployee ? selectedEmployee._id : null}
-        ></SelectDropdown>
-      </Form.Group>
+      <>
+        <Form.Group className='mb-3' controlId='selectEmployeePayroll'>
+          <Form.Label className='col-form-label'>Employee</Form.Label>
+          <SelectDropdown
+            className={'form-select mb-3 bg-transparent'}
+            ariaLabel={'employee_id'}
+            onChangeHandler={handleEmployeeSelection}
+            id={'selectEmployeePayroll'}
+            name={'employee_id'}
+            selectOptions={employees}
+            optionValue={'_id'}
+            optionDisplay={['first_name', 'last_name']}
+            selectedOption={selectedEmployee ? selectedEmployee._id : null}
+          ></SelectDropdown>
+        </Form.Group>
+        <Button variant='primary' onClick={onPayEmployee}>
+          Pay Employee
+        </Button>
+      </>
     )
   }
 
@@ -84,13 +91,9 @@ export const PayrollPage = () => {
           showButton={false}
           customComponent={selectEmployee}
         />
-        <Button variant='primary' onClick={onPayEmployee}>
-          Pay Employee
-        </Button>
       </section>
 
       <PayrollList
-        employees={employees}
         selectedEmployee={selectedEmployee}
         payrollHistory={payrollHistory}
         handleEmployeeSelection={handleEmployeeSelection}

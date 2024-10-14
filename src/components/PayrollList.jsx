@@ -1,28 +1,29 @@
+import { formatAmount } from '../utils/utils'
+
 const PayrollList = ({ selectedEmployee, payrollHistory }) => {
+  console.log(selectedEmployee)
   const payrollWithholding = (payroll) => {
-    return (
+    return formatAmount(
       payroll.federal_tax_withheld +
-      payroll.state_tax_withheld +
-      payroll.social_security_tax +
-      payroll.medicare_tax
-    ).toFixed(2)
+        payroll.state_tax_withheld +
+        payroll.social_security_tax +
+        payroll.medicare_tax
+    )
   }
 
   const totalDisbursement = payrollHistory
     .reduce((acc, payroll) => acc + (payroll.amount_paid || 0), 0)
     .toFixed(2)
 
-  const totalWithholdings = payrollHistory
-    .reduce((acc, payroll) => {
-      return (
-        acc +
+  const totalWithholdings = payrollHistory.reduce((acc, payroll) => {
+    return formatAmount(
+      acc +
         payroll.federal_tax_withheld +
         payroll.state_tax_withheld +
         payroll.social_security_tax +
         payroll.medicare_tax
-      )
-    }, 0)
-    .toFixed(2)
+    )
+  }, 0)
 
   return (
     <section className='d-flex flex-column justify-content-evenly custom-size'>
@@ -63,9 +64,9 @@ const PayrollList = ({ selectedEmployee, payrollHistory }) => {
           </thead>
           <tbody className='table-group-divider'>
             {payrollHistory.map((payroll, i) => (
-              <tr key={i} payroll>
+              <tr key={i}>
                 <td>{new Date(payroll.date_paid).toLocaleDateString()}</td>
-                <td>{payroll.amount_paid.toFixed(2)}</td>
+                <td>{formatAmount(payroll.amount_paid)}</td>
                 <td>{payrollWithholding(payroll)}</td>
               </tr>
             ))}
@@ -78,7 +79,7 @@ const PayrollList = ({ selectedEmployee, payrollHistory }) => {
           <caption></caption>
           <thead className='thead-dark'>
             <tr>
-              <th>Salary</th>
+              <th>Monthly Salary</th>
               <th>Bounce</th>
               <th>Federal Tax Withheld</th>
               <th>State Tax Withheld</th>
@@ -90,13 +91,13 @@ const PayrollList = ({ selectedEmployee, payrollHistory }) => {
           <tbody className='table-group-divider'>
             {payrollHistory.map((payroll, i) => (
               <tr key={i}>
-                <td>{selectedEmployee.salary.toFixed(2)}</td>
-                <td>{payroll.bounce.toFixed(2)}</td>
-                <td>{payroll.federal_tax_withheld.toFixed(2)}</td>
-                <td>{payroll.state_tax_withheld.toFixed(2)}</td>
-                <td>{payroll.social_security_tax.toFixed(2)}</td>
-                <td>{payroll.medicare_tax.toFixed(2)}</td>
-                <td>{payroll.amount_paid.toFixed(2)}</td>
+                <td>{formatAmount(selectedEmployee.salary / 12)}</td>
+                <td>{payroll.bounce}</td>
+                <td>{formatAmount(payroll.federal_tax_withheld)}</td>
+                <td>{formatAmount(payroll.state_tax_withheld)}</td>
+                <td>{formatAmount(payroll.social_security_tax)}</td>
+                <td>{formatAmount(payroll.medicare_tax)}</td>
+                <td>{formatAmount(payroll.amount_paid)}</td>
               </tr>
             ))}
           </tbody>

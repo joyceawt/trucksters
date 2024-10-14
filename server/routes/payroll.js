@@ -7,7 +7,7 @@ const {
   calculateFICA,
 } = require('../utils/taxCalculations')
 
-router.post('/payroll/:employeeId', async (req, res) => {
+router.post('/:employeeId', async (req, res) => {
   const { employeeId } = req.params
   const employee = await EmployeeModel.findById(employeeId)
 
@@ -15,11 +15,12 @@ router.post('/payroll/:employeeId', async (req, res) => {
     return res.status(404).json({ message: 'Employee not found' })
   }
 
-  const salary = employee.salary
-  const federalTax = calculateFederalTax(salary)
-  const stateTax = calculateStateTax(salary, employee.state)
+  const annualSalary = employee.salary
+  const monthlySalary = annualSalary / 12
+  const federalTax = calculateFederalTax(monthlySalary)
+  const stateTax = calculateStateTax(monthlySalary, employee.state)
   const { socialSecurityTax, medicareTax, additionalMedicareTax } =
-    calculateFICA(salary)
+    calculateFICA(monthlySalary)
 
   const totalWithholding =
     federalTax +
@@ -27,7 +28,7 @@ router.post('/payroll/:employeeId', async (req, res) => {
     socialSecurityTax +
     medicareTax +
     additionalMedicareTax
-  const netSalary = salary - totalWithholding
+  const netSalary = monthlySalary - totalWithholding
 
   const payrollEvent = {
     date_paid: new Date(),

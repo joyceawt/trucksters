@@ -51,7 +51,12 @@ const generateBalanceSheet = async (balanceDate) => {
       const payrollDate = normalizeDate(payroll.date_paid)
 
       if (payrollDate < normalizedBalanceDate) {
-        payrollExpenses += payroll.amount_paid
+        payrollExpenses +=
+          payroll.amount_paid +
+          payroll.federal_tax_withheld +
+          payroll.state_tax_withheld +
+          payroll.social_security_tax +
+          payroll.medicare_tax
       }
     })
   })

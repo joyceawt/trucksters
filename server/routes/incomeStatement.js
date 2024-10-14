@@ -50,17 +50,16 @@ const generateIncomeStatement = async (startDate, endDate) => {
     })
 
     payrollForPeriod.forEach((payroll) => {
-      payrollExpenses += payroll.amount_paid
+      const withholding =
+        payroll.federal_tax_withheld +
+        payroll.state_tax_withheld +
+        payroll.social_security_tax +
+        payroll.medicare_tax
+      const grossSalary = payroll.amount_paid + withholding
 
-      // Payroll withholdings
-      const federalTax = calculateFederalTax(payroll.amount_paid)
-      const stateTax = calculateStateTax(payroll.amount_paid, employee.state)
-      const { socialSecurityTax, medicareTax } = calculateFICA(
-        payroll.amount_paid
-      )
+      payrollWithholding += withholding
 
-      payrollWithholding +=
-        federalTax + stateTax + socialSecurityTax + medicareTax
+      payrollExpenses += grossSalary
     })
   })
 
