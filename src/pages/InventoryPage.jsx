@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { InventoryList, UtilityBar } from '../components'
 
-const INVENTORY_PATH = 'http://localhost:4000/api/inventory'
+const INVENTORY_PATH = `${process.env.REACT_APP_MONGO_BASE_URL}/inventory`
 
 export const allInventory = async () => {
   const { data } = await axios.get(INVENTORY_PATH)

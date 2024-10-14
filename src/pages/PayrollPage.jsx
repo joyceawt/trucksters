@@ -9,7 +9,7 @@ export const PayrollPage = () => {
   const [selectedEmployee, setSelectedEmployee] = useState(null)
   const [payrollHistory, setPayrollHistory] = useState([])
 
-  const PAYROLL_PROCESS_URL = 'http://localhost:4000/api/payroll'
+  const PAYROLL_PROCESS_URL = `${process.env.REACT_APP_MONGO_BASE_URL}/payroll`
 
   const fetchEmployees = async () => {
     try {

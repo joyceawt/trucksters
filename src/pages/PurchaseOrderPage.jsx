@@ -6,7 +6,7 @@ import {
   CreatePurchaseOrder,
 } from '../components'
 
-const PO_PATH = 'http://localhost:4000/api/purchase-orders'
+const PO_PATH = `${process.env.REACT_APP_MONGO_BASE_URL}/purchase-orders`
 
 const allPOs = async () => {
   return await axios.get(PO_PATH)

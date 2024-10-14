@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { VendorsList, UtilityBar, AddVendor } from '../components'
 
-const VENDORS_PATH = 'http://localhost:4000/api/vendors'
+const VENDORS_PATH = `${process.env.REACT_APP_MONGO_BASE_URL}/vendors`
 
 const allVendors = async () => {
   return await axios.get(VENDORS_PATH)

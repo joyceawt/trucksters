@@ -6,8 +6,10 @@ import { formatDateToLocal } from '../utils/utils'
 const BalanceSheetPage = () => {
   const [balanceSheet, setBalanceSheet] = useState(null)
   const [balanceDate, setBalanceDate] = useState(formatDateToLocal(new Date()))
+  console.log(process.env)
+  console.log(process.env.REACT_APP_MONGO_BASE_URL)
 
-  const BALANCE_SHEET_PATH = 'http://localhost:4000/api/balance-sheet'
+  const BALANCE_SHEET_PATH = `${process.env.REACT_APP_MONGO_BASE_URL}/balance-sheet`
 
   useEffect(() => {
     const fetchBalanceSheet = async () => {

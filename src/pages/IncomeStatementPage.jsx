@@ -11,8 +11,8 @@ const IncomeStatementPage = () => {
   const [endDate, setEndDate] = useState(formatDateToLocal(new Date()))
   const [expenses, setExpenses] = useState([])
 
-  const INCOME_STATEMENT_PATH = 'http://localhost:4000/api/income-statement'
-  const EXPENSES_PATH = 'http://localhost:4000/api/expenses'
+  const INCOME_STATEMENT_PATH = `${process.env.REACT_APP_MONGO_BASE_URL}/income-statement`
+  const EXPENSES_PATH = `${process.env.REACT_APP_MONGO_BASE_URL}/expenses`
 
   useEffect(() => {
     const fetchIncomeStatement = async () => {

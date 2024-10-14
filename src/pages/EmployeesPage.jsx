@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { EmployeesList, UtilityBar, AddEmployee } from '../components'
 
-const EMPLOYEES_PATH = 'http://localhost:4000/api/employees'
+const EMPLOYEES_PATH = `${process.env.REACT_APP_MONGO_BASE_URL}/employees`
 
 export const allEmployees = async () => {
   return await axios.get(EMPLOYEES_PATH)

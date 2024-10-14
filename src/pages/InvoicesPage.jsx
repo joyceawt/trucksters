@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { InvoicesList, UtilityBar, CreateInvoice } from '../components'
 
-const INVOICE_PATH = 'http://localhost:4000/api/invoices'
+const INVOICE_PATH = `${process.env.REACT_APP_MONGO_BASE_URL}/invoices`
 
 const allInvoices = async () => {
   return await axios.get(INVOICE_PATH)

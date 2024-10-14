@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { CustomersList, UtilityBar, AddCustomer } from '../components'
 
-const CUSTOMERS_PATH = 'http://localhost:4000/api/customers'
+const CUSTOMERS_PATH = `${process.env.REACT_APP_MONGO_BASE_URL}/customers`
 
 export const allCustomers = async () => {
   return await axios.get(CUSTOMERS_PATH)
