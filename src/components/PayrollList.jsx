@@ -11,9 +11,9 @@ const PayrollList = ({ selectedEmployee, payrollHistory }) => {
     )
   }
 
-  const totalDisbursement = payrollHistory
-    .reduce((acc, payroll) => acc + (payroll.amount_paid || 0), 0)
-    .toFixed(2)
+  const totalDisbursement = formatAmount(
+    payrollHistory.reduce((acc, payroll) => acc + (payroll.amount_paid || 0), 0)
+  )
 
   const totalWithholdings = payrollHistory.reduce((acc, payroll) => {
     return formatAmount(
@@ -36,7 +36,7 @@ const PayrollList = ({ selectedEmployee, payrollHistory }) => {
             <div className='card text-center bg-pink'>
               <div className='card-body '>
                 <h5 className='card-title'>Total Dispursement</h5>
-                <p className='card-text'>${totalDisbursement}</p>
+                <p className='card-text'>{totalDisbursement}</p>
               </div>
             </div>
           </div>
@@ -45,7 +45,7 @@ const PayrollList = ({ selectedEmployee, payrollHistory }) => {
             <div className='card text-center bg-pink'>
               <div className='card-body'>
                 <h5 className='card-title'>Total Withholding</h5>
-                <p className='card-text'>${totalWithholdings} </p>
+                <p className='card-text'>{totalWithholdings} </p>
               </div>
             </div>
           </div>
