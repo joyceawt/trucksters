@@ -23,13 +23,13 @@ const CreatePurchaseOrder = ({ onCreatePo }) => {
       })
 
       setParts(allParts)
+      setSelectedPartId(allParts[0]._id)
     } catch (err) {
       console.error(err)
     }
   }
 
-  const handlePartSelection = (e) => {
-    const partId = e.target.value
+  const handlePartSelection = (partId) => {
     setSelectedPartId(partId)
   }
 

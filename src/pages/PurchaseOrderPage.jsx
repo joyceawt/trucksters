@@ -28,8 +28,9 @@ export const PurchaseOrderPage = ({ createPO }) => {
   const onCreatePurchaseOrder = async (po) => {
     try {
       const { data } = await axios.post(PO_PATH, po)
+      const { purchaseOrder } = data
 
-      setPurchaseOrders([...purchaseOrders, data])
+      setPurchaseOrders([...purchaseOrders, purchaseOrder])
       return true
     } catch (err) {
       if (err && err.response && err.response.data) {
@@ -50,7 +51,7 @@ export const PurchaseOrderPage = ({ createPO }) => {
   }, [])
 
   const displayComponent = createPO ? (
-    <CreatePurchaseOrder onCreatePurchaseOrder={onCreatePurchaseOrder} />
+    <CreatePurchaseOrder onCreatePo={onCreatePurchaseOrder} />
   ) : (
     <PurchaseOrdersList purchaseOrders={purchaseOrders} />
   )

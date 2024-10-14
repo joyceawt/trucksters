@@ -3,10 +3,24 @@ const router = express.Router()
 const PurchaseOrder = require('../models/PurchaseOrder')
 const Inventory = require('../models/Inventory')
 
+const formattedOrders = (orders) => {
+  return orders.map((order) => ({
+    ...order._doc,
+    supplier: order.supplier.company_name,
+    part: order.part.part,
+  }))
+}
+
 router.get('/', async (req, res) => {
   try {
     const orders = await PurchaseOrder.find()
-    res.json(orders)
+      .populate('supplier', 'company_name -_id')
+      .populate('part', 'part -_id')
+      .exec()
+
+    const formattedPOs = formattedOrders(orders)
+
+    res.json(formattedPOs)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
@@ -24,7 +38,8 @@ router.post('/', async (req, res) => {
     const supplierId = inventoryItem.vendor._id
     const pricePerUnit = inventoryItem.price_per_unit
     const totalCost = quantity * pricePerUnit
-    const poNumber = PurchaseOrder.countDocuments() + 1
+    const poCount = await PurchaseOrder.countDocuments()
+    const poNumber = poCount + 1
 
     // purchased quantity often differs from the requested quantity
     // randomize adding and subtracting 10% of requested quantity
@@ -53,6 +68,10 @@ router.post('/', async (req, res) => {
     })
 
     const savedPurchaseOrder = await newPurchaseOrder.save()
+    await savedPurchaseOrder.populate('supplier', 'company_name -_id')
+    await savedPurchaseOrder.populate('part', 'part -_id')
+
+    const formattedPO = formattedOrders([savedPurchaseOrder])[0]
 
     inventoryItem.quantity += quantityReceived
 
@@ -60,7 +79,7 @@ router.post('/', async (req, res) => {
 
     res.status(201).json({
       message: `Purchase order created successfully, received ${quantityReceived} parts.`,
-      purchaseOrder: savedPurchaseOrder,
+      purchaseOrder: formattedPO,
       updatedInventory: inventoryItem,
     })
   } catch (err) {

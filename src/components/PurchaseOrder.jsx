@@ -1,3 +1,5 @@
+import { formatAmount } from '../utils/utils'
+
 const PurchaseOrder = ({ po }) => {
   return (
     <tr>
@@ -7,8 +9,8 @@ const PurchaseOrder = ({ po }) => {
       <td>{po.part}</td>
       <td>{po.ordered_quantity}</td>
       <td>{po.quantity}</td>
-      <td>{po.price_per_part}</td>
-      <td>{po.total_cost.toFixed(2)}</td>
+      <td>{formatAmount(po.price_per_unit)}</td>
+      <td>{formatAmount(po.total_cost)}</td>
     </tr>
   )
 }
