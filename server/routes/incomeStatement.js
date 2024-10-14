@@ -37,9 +37,7 @@ const generateIncomeStatement = async (startDate, endDate) => {
   const grossProfit = sales - cogs
 
   // Expenses (excl payroll)
-  const expenses = await Expense.find({
-    date: { $gte: startDate, $lte: endDate },
-  })
+  const expenses = await Expense.find() // these are fixed monthly expenses
 
   totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0)
 

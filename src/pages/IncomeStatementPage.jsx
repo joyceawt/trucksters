@@ -42,11 +42,11 @@ const IncomeStatementPage = () => {
   }, [startDate, endDate])
 
   const handleStartDateChange = (date) => {
-    setStartDate(formatDateToLocal(new Date(date)))
+    setStartDate(date)
   }
 
   const handleEndDateChange = (date) => {
-    setEndDate(formatDateToLocal(new Date(date)))
+    setEndDate(date)
   }
 
   const DatePickerComponent = () => {
