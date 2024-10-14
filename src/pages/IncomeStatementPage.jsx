@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { IncomeStatementTable, UtilityBar, DatePicker } from '../components'
 import { Row, Form, Col } from 'react-bootstrap'
+import { formatDateToLocal } from '../utils/utils'
 
 const IncomeStatementPage = () => {
   const startOfYear = new Date(new Date().getFullYear(), 0, 1)
   const [incomeStatement, setIncomeStatement] = useState(null)
-  const [startDate, setStartDate] = useState(
-    startOfYear.toISOString().split('T')[0]
-  )
-  const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0])
+  const [startDate, setStartDate] = useState(formatDateToLocal(startOfYear))
+  const [endDate, setEndDate] = useState(formatDateToLocal(new Date()))
   const [expenses, setExpenses] = useState([])
 
   const INCOME_STATEMENT_PATH = 'http://localhost:4000/api/income-statement'
@@ -43,11 +42,11 @@ const IncomeStatementPage = () => {
   }, [startDate, endDate])
 
   const handleStartDateChange = (date) => {
-    setStartDate(date)
+    setStartDate(formatDateToLocal(new Date(date)))
   }
 
   const handleEndDateChange = (date) => {
-    setEndDate(date)
+    setEndDate(formatDateToLocal(new Date(date)))
   }
 
   const DatePickerComponent = () => {

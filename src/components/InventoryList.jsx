@@ -1,3 +1,5 @@
+import { formatAmount } from '../utils/utils'
+
 export const buildCapacity = (inventoryItems) => {
   if (!inventoryItems || inventoryItems.length === 0) {
     return 0
@@ -34,7 +36,7 @@ export const InventoryList = ({ inventoryItems, completeToysInStock }) => {
   }
 
   const totalValue = () => {
-    return buildCapacity(inventoryItems) * cogPerUnit() || 0
+    return completeToysInStock * cogPerUnit() || 0
   }
 
   return (
@@ -55,9 +57,9 @@ export const InventoryList = ({ inventoryItems, completeToysInStock }) => {
             {inventoryItems.map((inventoryItem, i) => (
               <tr key={i}>
                 <td>{inventoryItem.part}</td>
-                <td>${inventoryItem.price_per_unit}</td>
+                <td>{formatAmount(inventoryItem.price_per_unit)}</td>
                 <td>{inventoryItem.quantity}</td>
-                <td>{inventoryItemValue(inventoryItem).toFixed(2)}</td>
+                <td>{formatAmount(inventoryItemValue(inventoryItem))}</td>
                 <td>{reorderItem(inventoryItem)}</td>
               </tr>
             ))}
@@ -75,8 +77,8 @@ export const InventoryList = ({ inventoryItems, completeToysInStock }) => {
           </thead>
           <tbody className='table-group-divider'>
             <tr>
-              <td>{inventoryTotal().toFixed(2)}</td>
-              <td>${cogPerUnit().toFixed(2)}</td>
+              <td>{formatAmount(inventoryTotal())}</td>
+              <td>{formatAmount(cogPerUnit())}</td>
               <td>{buildCapacity(inventoryItems)}</td>
             </tr>
           </tbody>
@@ -93,7 +95,7 @@ export const InventoryList = ({ inventoryItems, completeToysInStock }) => {
           <tbody className='table-group-divider'>
             <tr>
               <td>{completeToysInStock}</td>
-              <td>${totalValue().toFixed(2)}</td>
+              <td>{formatAmount(totalValue())}</td>
             </tr>
           </tbody>
         </table>

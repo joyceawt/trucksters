@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { BalanceSheetTable, UtilityBar, DatePicker } from '../components'
+import { formatDateToLocal } from '../utils/utils'
 
 const BalanceSheetPage = () => {
   const [balanceSheet, setBalanceSheet] = useState(null)
-  const [balanceDate, setBalanceDate] = useState(
-    new Date().toISOString().split('T')[0]
-  )
+  const [balanceDate, setBalanceDate] = useState(formatDateToLocal(new Date()))
 
   const BALANCE_SHEET_PATH = 'http://localhost:4000/api/balance-sheet'
 

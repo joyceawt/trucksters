@@ -88,9 +88,11 @@ const generateIncomeStatement = async (startDate, endDate) => {
 
 router.get('/', async (req, res) => {
   const startDate = req.query.startDate
-    ? new Date(req.query.startDate)
+    ? new Date(`${req.query.startDate}T00:00:00`)
     : new Date(new Date().getFullYear(), 0, 1) // Jan 1st of the current year
-  const endDate = req.query.endDate ? new Date(req.query.endDate) : new Date()
+  const endDate = req.query.endDate
+    ? new Date(`${req.query.endDate}T23:59:59`)
+    : new Date()
   try {
     const incomeStatement = await generateIncomeStatement(startDate, endDate)
     res.json(incomeStatement)
