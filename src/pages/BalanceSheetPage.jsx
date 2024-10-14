@@ -26,6 +26,10 @@ const BalanceSheetPage = () => {
     fetchBalanceSheet()
   }, [balanceDate])
 
+  const onChangeDate = (date) => {
+    setBalanceDate(date)
+  }
+
   const datePickerComponent = () => {
     return (
       <DatePicker
@@ -33,7 +37,7 @@ const BalanceSheetPage = () => {
         name='balance-date'
         label='Change Date:'
         value={balanceDate}
-        onChange={(e) => setBalanceDate(e.target.value)}
+        onChangeHandler={onChangeDate}
       />
     )
   }

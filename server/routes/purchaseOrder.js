@@ -37,7 +37,6 @@ router.post('/', async (req, res) => {
 
     const supplierId = inventoryItem.vendor._id
     const pricePerUnit = inventoryItem.price_per_unit
-    const totalCost = quantity * pricePerUnit
     const poCount = await PurchaseOrder.countDocuments()
     const poNumber = poCount + 1
 
@@ -50,6 +49,8 @@ router.post('/', async (req, res) => {
     } else {
       quantityReceived = Math.floor(quantity * 0.9)
     }
+
+    const totalCost = quantityReceived * pricePerUnit
 
     const newPurchaseOrder = new PurchaseOrder({
       po_number: poNumber,
