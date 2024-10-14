@@ -1,3 +1,5 @@
+import { formatAmount } from '../utils/utils'
+
 const Employee = ({ employee }) => {
   return (
     <tr>
@@ -10,7 +12,7 @@ const Employee = ({ employee }) => {
       <td>{employee.zip}</td>
       <td>{employee.ssn}</td>
       <td>{employee.withholdings}</td>
-      <td>{employee.salary}</td>
+      <td>{formatAmount(employee.salary)}</td>
     </tr>
   )
 }
