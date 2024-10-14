@@ -55,10 +55,16 @@ export const PurchaseOrderPage = ({ createPO }) => {
     <PurchaseOrdersList purchaseOrders={purchaseOrders} />
   )
 
+  const showAddButton = createPO ? false : true
+
   return (
     <>
       <section>
-        <UtilityBar contentTitle={displayContentTitle} addLink='/po/create' />
+        <UtilityBar
+          contentTitle={displayContentTitle}
+          addLink='/po/create'
+          showButton={showAddButton}
+        />
       </section>
 
       {displayComponent}

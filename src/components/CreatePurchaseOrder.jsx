@@ -13,8 +13,9 @@ const CreatePurchaseOrder = ({ onCreatePo }) => {
 
   const fetchParts = async () => {
     try {
-      const { data } = await allInventory()
-      const allParts = data.map((part) => {
+      const data = await allInventory()
+      const { inventory } = data
+      const allParts = inventory.map((part) => {
         return {
           _id: part._id,
           part_name: part.part,
