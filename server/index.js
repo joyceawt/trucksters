@@ -28,7 +28,13 @@ mongoose
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.log('Error connecting to MongoDB:', err))
 
-app.use(cors())
+app.use(
+  cors({
+    origin: '*',
+    methods: ['POST', 'GET'],
+    credentials: true,
+  })
+)
 app.use(express.json())
 
 // API routes
@@ -43,13 +49,6 @@ app.use('/api/balance-sheet', balanceSheet)
 app.use('/api/income-statement', incomeStatement)
 app.use('/api/payroll', payrollRoutes)
 app.use('/api/expenses', expenseRoutes)
-
-// Serve static files from the React FE
-app.use(express.static(path.join(__dirname, '../build')))
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'))
-})
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
