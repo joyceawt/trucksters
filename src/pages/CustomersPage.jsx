@@ -49,12 +49,16 @@ export const CustomersPage = ({ addCustomer }) => {
     <CustomersList customers={customers} />
   )
 
+  const showAddButton = addCustomer ? false : true
+
   return (
     <>
       <section>
         <UtilityBar
           contentTitle={displayContentTitle}
           addLink='/customers/add'
+          showButton={showAddButton}
+          showAddButton
         />
       </section>
 

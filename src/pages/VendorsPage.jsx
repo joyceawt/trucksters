@@ -49,10 +49,16 @@ export const VendorsPage = ({ addVendor }) => {
     <VendorsList vendors={vendors} />
   )
 
+  const showAddButton = addVendor ? false : true
+
   return (
     <>
       <section>
-        <UtilityBar contentTitle={displayContentTitle} addLink='/vendors/add' />
+        <UtilityBar
+          contentTitle={displayContentTitle}
+          addLink='/vendors/add'
+          showButton={showAddButton}
+        />
       </section>
 
       {displayComponent}
