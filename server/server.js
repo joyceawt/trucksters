@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const path = require('path')
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -42,6 +43,13 @@ app.use('/api/balance-sheet', balanceSheet)
 app.use('/api/income-statement', incomeStatement)
 app.use('/api/payroll', payrollRoutes)
 app.use('/api/expenses', expenseRoutes)
+
+// Serve static files from the React FE
+app.use(express.static(path.join(__dirname, '../build')))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'))
+})
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
