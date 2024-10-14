@@ -10,12 +10,16 @@ export const allCustomers = async () => {
 
 export const CustomersPage = ({ addCustomer }) => {
   const [customers, setCustomers] = useState([])
+  const [sellingPrice, setSellingPrice] = useState(0)
 
   const fetchCustomers = async () => {
     try {
       const { data } = await allCustomers()
+      const { customers, selling_price } = data
+      console.log(data)
 
-      setCustomers(data)
+      setCustomers(customers)
+      setSellingPrice(selling_price)
     } catch (err) {
       console.error(err)
     }
@@ -46,7 +50,7 @@ export const CustomersPage = ({ addCustomer }) => {
   const displayComponent = addCustomer ? (
     <AddCustomer onAddCustomer={onAddCustomer} />
   ) : (
-    <CustomersList customers={customers} />
+    <CustomersList customers={customers} sellingPrice={sellingPrice} />
   )
 
   const showAddButton = addCustomer ? false : true

@@ -1,11 +1,16 @@
 const express = require('express')
 const router = express.Router()
 const Customer = require('../models/Customer')
+const Product = require('../models/Product')
 
 router.get('/', async (req, res) => {
   try {
     const customers = await Customer.find()
-    res.json(customers)
+    const product = await Product.findOne()
+    res.json({
+      customers,
+      selling_price: product.selling_price,
+    })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

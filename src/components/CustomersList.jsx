@@ -1,6 +1,6 @@
 import { Customer } from './index'
 
-const CustomersList = ({ customers }) => {
+const CustomersList = ({ customers, sellingPrice }) => {
   return (
     <section className='d-flex flex-column justify-content-evenly custom-size'>
       <article className='card table-responsive bg-white'>
@@ -16,11 +16,16 @@ const CustomersList = ({ customers }) => {
               <th>City</th>
               <th>State</th>
               <th>Zip</th>
+              <th>Price</th>
             </tr>
           </thead>
           <tbody className='table-group-divider'>
             {customers.map((customer, i) => (
-              <Customer key={i} customer={customer} />
+              <Customer
+                key={i}
+                customer={customer}
+                sellingPrice={sellingPrice}
+              />
             ))}
           </tbody>
         </table>

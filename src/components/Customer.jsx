@@ -1,4 +1,6 @@
-const Customer = ({ customer }) => {
+import { formatAmount } from '../utils/utils'
+
+const Customer = ({ customer, sellingPrice }) => {
   return (
     <tr>
       <td>{customer.company_name}</td>
@@ -9,6 +11,7 @@ const Customer = ({ customer }) => {
       <td>{customer.city}</td>
       <td>{customer.state}</td>
       <td>{customer.zip}</td>
+      <td>{formatAmount(sellingPrice)}</td>
     </tr>
   )
 }
