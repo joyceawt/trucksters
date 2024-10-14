@@ -30,7 +30,7 @@ mongoose
 
 app.use(
   cors({
-    origin: ['https://trucksters-frontend.vercel.app/'],
+    origin: ['https://trucksters-frontend.vercel.app'],
     methods: ['POST', 'GET'],
     credentials: true,
   })
