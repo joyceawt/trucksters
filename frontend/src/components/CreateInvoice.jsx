@@ -29,9 +29,10 @@ const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
   const fetchCustomers = async () => {
     try {
       const { data } = await allCustomers()
+      const customersData = data.customers
 
-      setCustomers(data)
-      setCustomerId(data[0]._id)
+      setCustomers(customersData)
+      setCustomerId(customersData[0]._id)
     } catch (err) {
       console.error(err)
     }
