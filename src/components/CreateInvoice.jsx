@@ -17,10 +17,10 @@ const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
 
   const fetchInventory = async () => {
     try {
-      const { inventoryItems, complete_toys_in_stock } = await allInventory()
+      const { inventory, complete_toys_in_stock } = await allInventory()
 
       setCompleteToysInStock(complete_toys_in_stock)
-      setInventoryItems(inventoryItems)
+      setInventoryItems(inventory)
     } catch (err) {
       console.error(err)
     }
@@ -31,13 +31,13 @@ const CreateInvoice = ({ onCreateInvoice, completeUnitsInStock }) => {
       const { data } = await allCustomers()
 
       setCustomers(data)
+      setCustomerId(data[0]._id)
     } catch (err) {
       console.error(err)
     }
   }
 
-  const handleCustomerSelection = (e) => {
-    const customerId = e.target.value
+  const handleCustomerSelection = (customerId) => {
     setCustomerId(customerId)
   }
 

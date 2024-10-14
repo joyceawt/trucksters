@@ -18,8 +18,14 @@ const generateBalanceSheet = async (balanceDate) => {
   let inventoryValue = 0
   let accountsReceivable = 0
   let accountsPayable = 0
-  let netWorth = 0
   let payrollExpenses = 0
+  const landBuilding = 0
+  const equipmentFix = 0
+  const totalFixedAssets = 0
+  const notesPayable = 0
+  const accruals = 0
+  const mortgage = 0
+  const totalLongTermDebt = 0
 
   const normalizedBalanceDate = normalizeDate(balanceDate)
 
@@ -58,16 +64,7 @@ const generateBalanceSheet = async (balanceDate) => {
     inventoryValue += item.price_per_unit * item.quantity
   })
 
-  totalCurrentAssets = cash + accountsReceivable + inventoryValue
-
-  const landBuilding = 0
-  const equipmentFix = 0
-  const totalFixedAssets = 0
-  const totalAssets =
-    totalCurrentAssets + landBuilding + equipmentFix + totalFixedAssets
-
   // Liabilites
-  const notesPayable = 0
 
   const POs = await PurchaseOrder.find()
   POs.forEach((po) => {
@@ -81,12 +78,14 @@ const generateBalanceSheet = async (balanceDate) => {
     }
   })
 
-  const accruals = 0
-  const totalCurrentLiabilities = notesPayable + accountsPayable + accruals
+  totalCurrentAssets = cash + accountsReceivable + inventoryValue
 
-  const mortgage = 0
-  const totalLongTermDebt = 0
-  netWorth = totalAssets - totalCurrentLiabilities - totalLongTermDebt
+  const totalAssets =
+    totalCurrentAssets + landBuilding + equipmentFix + totalFixedAssets
+
+  const totalCurrentLiabilities = accountsPayable + accruals + notesPayable
+
+  const netWorth = totalAssets - totalCurrentLiabilities - totalLongTermDebt
 
   const totalLiabilitiesAndNetWorth = totalCurrentLiabilities + netWorth
 

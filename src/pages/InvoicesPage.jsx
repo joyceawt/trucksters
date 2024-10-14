@@ -21,11 +21,12 @@ export const InvoicesPage = ({ createInvoice }) => {
     }
   }
 
-  const onCreateInvoice = async (invoice) => {
+  const onCreateInvoice = async (newInvoice) => {
     try {
-      const { data } = await axios.post(INVOICE_PATH, invoice)
+      const { data } = await axios.post(INVOICE_PATH, newInvoice)
+      const { invoice } = data
 
-      setInvoices([...invoices, data])
+      setInvoices([...invoices, invoice])
       return true
     } catch (err) {
       if (err && err.response && err.response.data) {
@@ -41,6 +42,8 @@ export const InvoicesPage = ({ createInvoice }) => {
     fetchInvoices()
   }, [])
 
+  const showAddButton = createInvoice ? false : true
+
   const utilityTitle = createInvoice ? 'Create Invoice' : 'Invoices History'
 
   const displayComponent = createInvoice ? (
@@ -52,7 +55,11 @@ export const InvoicesPage = ({ createInvoice }) => {
   return (
     <>
       <section>
-        <UtilityBar contentTitle={utilityTitle} addLink='/invoices/create' />
+        <UtilityBar
+          contentTitle={utilityTitle}
+          addLink='/invoices/create'
+          showButton={showAddButton}
+        />
       </section>
 
       {displayComponent}

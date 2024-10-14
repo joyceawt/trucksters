@@ -5,11 +5,22 @@ const Customer = require('../models/Customer')
 const Product = require('../models/Product')
 const Inventory = require('../models/Inventory')
 
+const formattedInvoice = (invoices) => {
+  return invoices.map((invoice) => ({
+    ...invoice._doc,
+    customer: invoice.customer.company_name,
+  }))
+}
+
 router.get('/', async (req, res) => {
   try {
-    const invoices = await Invoice.find().populate('customer').exec()
+    const invoices = await Invoice.find()
+      .populate('customer', 'company_name -_id')
+      .exec()
 
-    res.json(invoices)
+    const formattedInv = formattedInvoice(invoices)
+
+    res.json(formattedInv)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
@@ -71,7 +82,8 @@ router.post('/', async (req, res) => {
     product.quantity -= quantity
 
     const totalAmount = quantity * product.selling_price
-    const invoiceNumber = Invoice.countDocuments() + 1
+    const invoiceCount = await Invoice.countDocuments()
+    const invoiceNumber = invoiceCount + 1
 
     const invoice = new Invoice({
       price_per_unit: product.selling_price,
@@ -88,10 +100,14 @@ router.post('/', async (req, res) => {
     })
 
     const newInvoice = await invoice.save()
+    await newInvoice.populate('customer', 'company_name -_id')
+
+    const formattedInv = formattedInvoice([newInvoice])[0]
+
     await product.save()
 
     res.status(201).json({
-      invoice: newInvoice,
+      invoice: formattedInv,
       message: 'Invoice created successfully',
     })
   } catch (err) {
